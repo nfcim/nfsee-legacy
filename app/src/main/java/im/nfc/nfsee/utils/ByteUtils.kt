@@ -1,5 +1,7 @@
 package im.nfc.nfsee.utils
 
+import java.nio.ByteBuffer
+
 object ByteUtils {
     private val HEX_CHARS = "0123456789ABCDEF"
     private val HEX_CHARS_ARRAY = "0123456789ABCDEF".toCharArray()
@@ -17,6 +19,8 @@ object ByteUtils {
         return result
     }
 
+    fun String.hexToInt() = this.hexToBytes().beToInt()
+
     fun ByteArray.toHexString(): String {
         val result = StringBuffer()
         forEach {
@@ -27,5 +31,17 @@ object ByteUtils {
             result.append(HEX_CHARS_ARRAY[secondIndex])
         }
         return result.toString()
+    }
+
+    fun ByteArray.beToInt(): Int {
+        assert(this.size == 4)
+        val buffer = ByteBuffer.wrap(this)
+        return buffer.int
+    }
+
+    fun ByteArray.beToShort(): Short {
+        assert(this.size == 2)
+        val buffer = ByteBuffer.wrap(this)
+        return buffer.short
     }
 }

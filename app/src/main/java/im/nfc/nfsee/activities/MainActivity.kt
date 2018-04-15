@@ -10,7 +10,6 @@ import kotlinx.android.synthetic.main.content_main.*
 import android.content.Intent
 import android.nfc.NfcAdapter
 import android.nfc.Tag
-import android.nfc.tech.*
 import android.view.View
 import android.widget.Toast
 import im.nfc.nfsee.R
@@ -26,6 +25,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         nfc = NfcManager(this)
+        if (intent.action == NfcAdapter.ACTION_TECH_DISCOVERED) onNewIntent(intent)
     }
 
     override fun onResume() {
@@ -56,6 +56,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onNewIntent(intent: Intent) {
         val tag = intent.getParcelableExtra<Tag>(NfcAdapter.EXTRA_TAG)
+        nfc.readCard(tag)
         Toast.makeText(this, "读到卡了！", Toast.LENGTH_SHORT).show()
     }
 

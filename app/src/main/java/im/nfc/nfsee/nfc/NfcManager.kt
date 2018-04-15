@@ -4,16 +4,14 @@ import android.app.Activity
 import android.app.PendingIntent
 import android.content.Intent
 import android.nfc.NfcAdapter
+import android.nfc.Tag
 import android.nfc.tech.*
-import im.nfc.nfsee.utils.ByteUtils.hexToBytes
-import im.nfc.nfsee.utils.ByteUtils.toHexString
+import im.nfc.nfsee.nfc.transit.Beijing
 import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
-import java.io.IOException
 
 
 class NfcManager(private val act: Activity) : AnkoLogger {
-    override val loggerTag: String = "NFSee"
+    override val loggerTag: String = "NfcManager"
 
     private var nfcAdapter: NfcAdapter? = NfcAdapter.getDefaultAdapter(act)
     private val pendingIntent = PendingIntent.getActivity(act, 0,
@@ -37,14 +35,15 @@ class NfcManager(private val act: Activity) : AnkoLogger {
 
     fun isEnabled() = nfcAdapter!!.isEnabled
 
-    private fun IsoDep.transceive(capdu: String): String? {
-        info("CC: $capdu")
-        return try {
-            val rapdu = this.transceive(capdu.hexToBytes()).toHexString()
-            info("CR: $rapdu")
-            rapdu
-        } catch (ex: IOException) {
-            null
+    fun readCard(tag: Tag) {
+        if (tag.techList.contains(IsoDep::class.java.name)) {
+            val iso7816 = ISO7816(tag)
+            iso7816.selectAID("A00000000386980701")
+            iso7816.readBinary(0x15)
+            val card = Beijing()
+            card.read(iso7816)
+            println(card.asn)
+            println(card.balance)
         }
     }
 }
