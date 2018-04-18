@@ -1,3 +1,6 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="action_bar_height_material">56.0dip</dimen>
+    <dimen name="toolbar_height_material">48.0dip</dimen>
+    <dimen name="transaction_img_height">140.0dip</dimen>
 </resources>

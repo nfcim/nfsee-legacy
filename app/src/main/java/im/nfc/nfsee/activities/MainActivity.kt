@@ -58,6 +58,8 @@ class MainActivity : AppCompatActivity() {
         val tag = intent.getParcelableExtra<Tag>(NfcAdapter.EXTRA_TAG)
         nfc.readCard(tag)
         Toast.makeText(this, "读到卡了！", Toast.LENGTH_SHORT).show()
+        // to test
+        startActivity(Intent(this, CardInfoActivity::class.java))
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

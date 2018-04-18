@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <ListView
+        android:id="@+id/list_history"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:childDivider="@android:color/transparent"
+        android:choiceMode="none"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0.0dip"
+        android:groupIndicator="@null"
+        android:listSelector="@android:color/transparent"
+        android:paddingBottom="5.0dip"
+        android:paddingTop="5.0dip" />
+
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/emptyHistory"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:layout_margin="10.0dip"
+        card_view:cardCornerRadius="4.0dip"
+        card_view:contentPadding="16.0dip">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_margin="15.0dip"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/transaction_img_height"
+                android:layout_marginBottom="16.0dip"
+                android:src="@drawable/invoice" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/transaction_empty"
+                android:textSize="15.0sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>

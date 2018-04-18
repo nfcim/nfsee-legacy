@@ -6,7 +6,7 @@ import android.content.Intent
 import android.nfc.NfcAdapter
 import android.nfc.Tag
 import android.nfc.tech.*
-import im.nfc.nfsee.nfc.transit.Beijing
+//import im.nfc.nfsee.nfc.transit.Beijing
 import org.jetbrains.anko.AnkoLogger
 
 
@@ -40,10 +40,10 @@ class NfcManager(private val act: Activity) : AnkoLogger {
             val iso7816 = ISO7816(tag)
             iso7816.selectAID("A00000000386980701")
             iso7816.readBinary(0x15)
-            val card = Beijing()
-            card.read(iso7816)
-            println(card.asn)
-            println(card.balance)
+//            val card = Beijing()
+//            card.read(iso7816)
+//            println(card.asn)
+//            println(card.balance)
         }
     }
 }
