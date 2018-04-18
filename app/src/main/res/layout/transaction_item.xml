@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="5.0dip"
+        android:layout_marginLeft="10.0dip"
+        android:layout_marginRight="10.0dip"
+        android:layout_marginTop="5.0dip"
+        android:foreground="?android:selectableItemBackground"
+        card_view:cardCornerRadius="4.0dip"
+        card_view:contentPadding="16.0dip">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/transaction_group_card"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/transaction_indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/fa_regular_400"
+                    android:text="@string/fa_angle_down"
+                    android:textSize="23.0sp" />
+
+                <TextView
+                    android:id="@+id/transaction_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10.0dip"
+                    android:text="10/10/2014"
+                    android:textSize="15.0sp"
+                    android:layout_marginStart="10.0dip" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center|end">
+
+                    <TextView
+                        android:id="@+id/transaction_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="13"
+                        android:textSize="15.0sp" />
+
+                    <TextView
+                        android:id="@+id/transaction_symbol"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="3.0dip"
+                        android:textSize="15.0sp"
+                        android:paddingStart="3.0dip" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TableLayout
+                android:id="@+id/transaction_detail"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5.0dip"
+                android:shrinkColumns="1"
+                android:visibility="gone">
+
+                <TableRow
+                    android:id="@+id/row_transaction_type"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5.0dip">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/transaction_type"
+                        android:textColor="#ff222222"
+                        android:textSize="13.0sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/transaction_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="7.0dip"
+                        android:textColor="#ff222222"
+                        android:textSize="12.0sp"
+                        android:paddingStart="7.0dip" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/row_transaction_country"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5.0dip">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/transaction_country"
+                        android:textColor="#ff222222"
+                        android:textSize="13.0sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/transaction_county"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="7.0dip"
+                        android:textColor="#ff222222"
+                        android:textSize="12.0sp"
+                        android:paddingStart="7.0dip" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/row_transaction_time"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5.0dip">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/transaction_time"
+                        android:textColor="#ff222222"
+                        android:textSize="13.0sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/transaction_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="7.0dip"
+                        android:textColor="#ff222222"
+                        android:textSize="12.0sp"
+                        android:paddingStart="7.0dip" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/row_transaction_crypto"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5.0dip">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/transaction_cryptogram"
+                        android:textColor="#ff222222"
+                        android:textSize="13.0sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/transaction_cryptogram"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="7.0dip"
+                        android:textColor="#ff222222"
+                        android:textSize="12.0sp"
+                        android:paddingStart="7.0dip" />
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>

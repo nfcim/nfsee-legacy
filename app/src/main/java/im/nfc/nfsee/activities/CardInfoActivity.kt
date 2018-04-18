@@ -8,7 +8,7 @@ import im.nfc.nfsee.R
 import im.nfc.nfsee.adapters.FragmentPagerAdapter
 import im.nfc.nfsee.fragments.CardDetailFragment
 import im.nfc.nfsee.fragments.CardLogFragment
-import im.nfc.nfsee.fragments.CardTransationFragment
+import im.nfc.nfsee.fragments.CardTransactionFragment
 import kotlinx.android.synthetic.main.activity_card_info.*
 
 class CardInfoActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
@@ -28,6 +28,8 @@ class CardInfoActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_card_info)
         setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        toolbar.setNavigationOnClickListener { _ -> finish() }
         initFragments()
         info_viewpager.adapter = FragmentPagerAdapter(fragments, listOf("详细信息", "交易记录", "日志"), supportFragmentManager)
         info_tabLayout.setupWithViewPager(info_viewpager)
@@ -36,7 +38,7 @@ class CardInfoActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
 
     private fun initFragments() {
         fragments.add(CardDetailFragment())
-        fragments.add(CardTransationFragment())
+        fragments.add(CardTransactionFragment())
         fragments.add(CardLogFragment())
     }
 }

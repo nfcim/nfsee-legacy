@@ -8,6 +8,12 @@
     <string name="card_representation_title">卡组织</string>
     <string name="card_name_title">卡别名</string>
     <string name="transaction_empty">本卡无法提供交易历史</string>
+    <string name="transaction_type">交易类型</string>
+    <string name="transaction_country">交易国家</string>
+    <string name="transaction_time">交易时间</string>
+    <string name="transaction_cryptogram">加密算法</string>
+    <string name="fa_angle_down">&#xf107;</string>
+    <string name="fa_angle_up">&#xf106;</string>
 
 
 </resources>
