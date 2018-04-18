@@ -4,5 +4,6 @@
     <color name="colorPrimaryDark">#C93600</color>
     <color name="colorAccent">#FF4081</color>
     <color name="material_black_color">#ff616161</color>
-
+    <color name="log_send">#ff8bc34a</color>
+    <color name="log_receive">#ff039be5</color>
 </resources>
