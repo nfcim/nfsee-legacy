@@ -16,7 +16,7 @@ class CardLogFragment : Fragment() {
         val logView = inflater.inflate(R.layout.fragment_log, container, false)
         val testLog = TransceiveLog("de ad be ef", "ba de c0 ff ee")
         logView.list_log.layoutManager = LinearLayoutManager(this.context)
-        logView.list_log.adapter = TransceiveLogAdapter(listOf(testLog))
+        logView.list_log.adapter = TransceiveLogAdapter(List(20){testLog})
         return logView
     }
 }

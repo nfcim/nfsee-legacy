@@ -19,7 +19,7 @@ class CardTransactionFragment : Fragment() {
         val transactionView = inflater.inflate(R.layout.fragment_tranactions, container, false)
         val testTransaction = Transaction(100, 100, LocalDateTime.now(), TransactionType.Purchase,"CNY", "Test", "Test", "Test")
         transactionView.list_history.layoutManager = LinearLayoutManager(this.context)
-        transactionView.list_history.adapter = TransactionAdapter(listOf(testTransaction), this.context!!)
+        transactionView.list_history.adapter = TransactionAdapter(List(20){testTransaction}, this.context!!)
         return transactionView
     }
 }

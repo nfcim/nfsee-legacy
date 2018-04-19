@@ -1,6 +1,6 @@
 package im.nfc.nfsee.adapters
 
-import android.content.Context
+
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -11,27 +11,36 @@ import kotlinx.android.synthetic.main.log_item.view.*
 
 class TransceiveLogAdapter(private val items: List<TransceiveLog>) : RecyclerView.Adapter<TransceiveLogAdapter.ViewHolder>() {
 
+    private val expanded = MutableList(items.size) { false }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.log_item, parent, false))
 
     override fun getItemCount() = items.size
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(items[position])
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(items[position], position)
 
-    inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-        init {
-            view.setOnClickListener {
-                with(view.log_detail){
-                    visibility = when(visibility) {
-                        View.VISIBLE -> View.GONE
-                        else -> View.VISIBLE
+    inner class ViewHolder(view: View) : ExpandableViewHolder(view, expanded) {
+
+        override fun setDetailVisibility(view: View, visibility: Boolean) {
+            with(view) {
+                when (visibility) {
+                    false -> {
+                        log_detail.visibility = View.GONE
+                    }
+                    true -> {
+                        log_detail.visibility = View.VISIBLE
                     }
                 }
             }
         }
-        fun bind(item: TransceiveLog) = with(view) {
+
+        fun bind(item: TransceiveLog, position: Int) = with(view) {
+            super.bind(position)
+            tag = position
             log_send.text = item.sendBytes
             log_receive.text = item.receiveBytes
             log_detail.text = item.detail
+            setDetailVisibility(view, expanded[position])
         }
     }
 }
