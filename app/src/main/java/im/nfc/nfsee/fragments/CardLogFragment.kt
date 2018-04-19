@@ -13,10 +13,10 @@ import kotlinx.android.synthetic.main.fragment_log.view.*
 
 class CardLogFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var logView = inflater?.inflate(R.layout.fragment_log, container, false)
+        val logView = inflater.inflate(R.layout.fragment_log, container, false)
         val testLog = TransceiveLog("de ad be ef", "ba de c0 ff ee")
         logView.list_log.layoutManager = LinearLayoutManager(this.context)
-        logView.list_log.adapter = TransceiveLogAdapter(listOf(testLog), this.context!!)
+        logView.list_log.adapter = TransceiveLogAdapter(listOf(testLog))
         return logView
     }
 }

@@ -4,6 +4,13 @@ data class TransceiveLog(
         var sendBytes: String,
         var receiveBytes: String
 ){
-    // TODO parse receiveBytes to explanation
-    var detail = "00 00 - unexplained"
+    var detail = parseBytes(sendBytes, receiveBytes)
+
+    companion object {
+
+        // TODO parse receiveBytes to explanation
+        private fun parseBytes(sendBytes: String, receiveBytes: String): String {
+            return "$sendBytes - unexplained\n$receiveBytes - unexplained"
+        }
+    }
 }

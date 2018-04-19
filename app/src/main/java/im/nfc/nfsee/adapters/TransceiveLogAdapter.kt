@@ -9,7 +9,7 @@ import im.nfc.nfsee.R
 import im.nfc.nfsee.nfc.TransceiveLog
 import kotlinx.android.synthetic.main.log_item.view.*
 
-class TransceiveLogAdapter(private val items: List<TransceiveLog>, context: Context) : RecyclerView.Adapter<TransceiveLogAdapter.ViewHolder>() {
+class TransceiveLogAdapter(private val items: List<TransceiveLog>) : RecyclerView.Adapter<TransceiveLogAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.log_item, parent, false))
 
