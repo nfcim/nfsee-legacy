@@ -26,6 +26,7 @@ data class Transaction(var atc: Int,
             return when (type) {
                 "02" -> TransactionType.Load
                 "06" -> TransactionType.Purchase
+                "09" -> TransactionType.Purchase
                 else -> TransactionType.Unknown
             }
         }

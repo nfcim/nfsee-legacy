@@ -1,7 +1,6 @@
 package im.nfc.nfsee.activities
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 
@@ -12,8 +11,11 @@ import android.nfc.NfcAdapter
 import android.nfc.Tag
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import im.nfc.nfsee.App
 import im.nfc.nfsee.R
 import im.nfc.nfsee.nfc.NfcManager
+import org.jetbrains.anko.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -56,10 +58,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onNewIntent(intent: Intent) {
         val tag = intent.getParcelableExtra<Tag>(NfcAdapter.EXTRA_TAG)
-        nfc.readCard(tag)
+        App.card = nfc.readCard(tag)
         Toast.makeText(this, "读到卡了！", Toast.LENGTH_SHORT).show()
-        // to test
-        startActivity(Intent(this, CardInfoActivity::class.java))
+        startActivity<CardInfoActivity>()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

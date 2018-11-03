@@ -1,5 +1,6 @@
 package im.nfc.nfsee.nfc.transit
 
+import im.nfc.nfsee.nfc.Card
 import im.nfc.nfsee.nfc.Transaction
 
 enum class TransitCardType {
@@ -14,7 +15,7 @@ enum class TransitCardType {
     EZlink
 }
 
-interface TransitCard {
+interface TransitCard: Card {
     val cardType: TransitCardType
     val issuer: String
     val asn: String

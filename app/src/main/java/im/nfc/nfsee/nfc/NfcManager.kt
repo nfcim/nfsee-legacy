@@ -35,14 +35,13 @@ class NfcManager(private val act: Activity) : AnkoLogger {
 
     fun isEnabled() = nfcAdapter!!.isEnabled
 
-    fun readCard(tag: Tag) {
+    fun readCard(tag: Tag): Card? {
         if (tag.techList.contains(IsoDep::class.java.name)) {
             val iso7816 = ISO7816(tag)
             // first try beijing
             val card = Beijing()
-            card.read(iso7816)
-            println(card.asn)
-            println(card.balance)
+            if (card.read(iso7816)) return card
         }
+        return null
     }
 }

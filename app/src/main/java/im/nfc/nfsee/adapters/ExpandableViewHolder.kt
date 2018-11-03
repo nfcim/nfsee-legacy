@@ -1,7 +1,7 @@
 package im.nfc.nfsee.adapters
 
-import android.support.v7.widget.RecyclerView
 import android.view.View
+import androidx.recyclerview.widget.RecyclerView
 
 abstract class ExpandableViewHolder(val view: View, val expanded: MutableList<Boolean>) : RecyclerView.ViewHolder(view) {
 

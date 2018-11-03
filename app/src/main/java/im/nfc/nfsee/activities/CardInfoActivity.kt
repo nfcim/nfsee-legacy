@@ -1,14 +1,17 @@
 package im.nfc.nfsee.activities
 
 import android.os.Bundle
-import android.support.design.widget.TabLayout
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
+import com.google.android.material.tabs.TabLayout
+import im.nfc.nfsee.App
 import im.nfc.nfsee.R
 import im.nfc.nfsee.adapters.FragmentPagerAdapter
 import im.nfc.nfsee.fragments.CardDetailFragment
 import im.nfc.nfsee.fragments.CardLogFragment
 import im.nfc.nfsee.fragments.CardTransactionFragment
+import im.nfc.nfsee.nfc.transit.TransitCard
 import kotlinx.android.synthetic.main.activity_card_info.*
 
 class CardInfoActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
@@ -37,7 +40,12 @@ class CardInfoActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
     }
 
     private fun initFragments() {
-        fragments.add(CardDetailFragment())
+        val detailFragment = CardDetailFragment()
+        if (App.card!! is TransitCard) {
+            val transitCard = App.card!! as TransitCard
+            detailFragment.arguments = bundleOf("title" to transitCard.issuer)
+        }
+        fragments.add(detailFragment)
         fragments.add(CardTransactionFragment())
         fragments.add(CardLogFragment())
     }
