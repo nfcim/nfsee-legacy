@@ -29,7 +29,7 @@ class CardInfoActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
         setContentView(R.layout.activity_card_info)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        toolbar.setNavigationOnClickListener { _ -> finish() }
+        toolbar.setNavigationOnClickListener { finish() }
         initFragments()
         info_viewpager.adapter = FragmentPagerAdapter(fragments, listOf("详细信息", "交易记录", "日志"), supportFragmentManager)
         info_tabLayout.setupWithViewPager(info_viewpager)

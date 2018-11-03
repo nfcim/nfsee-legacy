@@ -7,14 +7,12 @@ import im.nfc.nfsee.nfc.TransactionType
 class Beijing : TransitCard {
     private var _balance: Int? = null
     private lateinit var _asn: String
-    private lateinit var _issuer: String
     private val _purchases = mutableListOf<Transaction>()
     private val _loads = mutableListOf<Transaction>()
     private var _extra = mutableMapOf<String, String>()
 
     override val cardType = TransitCardType.CityUnion
-    override val issuer: String
-        get() = _issuer
+    override val issuer: String = "北京一卡通（非互通版）"
     override val balance: Int?
         get() = _balance
     override val asn: String
