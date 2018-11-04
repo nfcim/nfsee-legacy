@@ -38,7 +38,7 @@ object Crypto {
         return cipher.doFinal(data)
     }
 
-    fun tdesApduDataEnc(key: ByteArray, data: ByteArray): ByteArray {
+    fun pbocApduDataEnc(key: ByteArray, data: ByteArray): ByteArray {
         if (key.size != 16) throw Exception("Invalid key size")
         val fullKey = key.plus(key.take(8))
         val cipher = Cipher.getInstance("DESede/ECB/NoPadding")
