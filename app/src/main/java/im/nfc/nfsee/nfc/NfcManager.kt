@@ -6,7 +6,6 @@ import android.content.Intent
 import android.nfc.NfcAdapter
 import android.nfc.Tag
 import android.nfc.tech.*
-import im.nfc.nfsee.nfc.transit.Beijing
 import org.jetbrains.anko.AnkoLogger
 
 
@@ -35,12 +34,21 @@ class NfcManager(private val act: Activity) : AnkoLogger {
 
     fun isEnabled() = nfcAdapter!!.isEnabled
 
-    fun readCard(tag: Tag): Card? {
+    fun readCard(tag: Tag): CardData? {
         if (tag.techList.contains(IsoDep::class.java.name)) {
-            val iso7816 = ISO7816(tag)
-            // first try beijing
-            val card = Beijing()
-            if (card.read(iso7816)) return card
+            val card = IsoDep.get(tag)
+            card.connect()
+            smartcard.card = card
+            val ret = LuaExecutor.execute(
+                    """require 'smartcard'
+                      |info = smartcard.transceive('00B0840000')
+                      |asn = string.sub(info, 0, 16)
+                      |smartcard.transceive('00A40000021001')
+                      |smartcard.transceive('805C000204')
+                      |return { asn = asn }""".trimMargin())
+            val data = CardData("北京一卡通（非互联互通版）", listOf(Pair("asn", ret.get("asn").checkjstring())))
+            card.close()
+            return data
         }
         return null
     }

@@ -58,9 +58,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onNewIntent(intent: Intent) {
         val tag = intent.getParcelableExtra<Tag>(NfcAdapter.EXTRA_TAG)
-        App.card = nfc.readCard(tag)
+        val cardData = nfc.readCard(tag)
         Toast.makeText(this, "读到卡了！", Toast.LENGTH_SHORT).show()
-        startActivity<CardInfoActivity>()
+        if (cardData != null) {
+            startActivity<CardInfoActivity>("data" to cardData)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

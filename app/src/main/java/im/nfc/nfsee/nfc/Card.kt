@@ -1,4 +1,5 @@
 package im.nfc.nfsee.nfc
 
-interface Card {
-}
+import java.io.Serializable
+
+data class CardData(val title: String, val table: List<Pair<String, String>>) : Serializable
