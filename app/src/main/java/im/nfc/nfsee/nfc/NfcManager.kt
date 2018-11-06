@@ -6,6 +6,8 @@ import android.content.Intent
 import android.nfc.NfcAdapter
 import android.nfc.Tag
 import android.nfc.tech.*
+import com.vicpin.krealmextensions.queryAll
+import im.nfc.nfsee.models.Script
 import org.jetbrains.anko.AnkoLogger
 
 
@@ -37,18 +39,14 @@ class NfcManager(private val act: Activity) : AnkoLogger {
     fun readCard(tag: Tag): CardData? {
         if (tag.techList.contains(IsoDep::class.java.name)) {
             val card = IsoDep.get(tag)
-            card.connect()
             smartcard.card = card
-            val ret = LuaExecutor.execute(
-                    """require 'smartcard'
-                      |info = smartcard.transceive('00B0840000')
-                      |asn = string.sub(info, 0, 16)
-                      |smartcard.transceive('00A40000021001')
-                      |smartcard.transceive('805C000204')
-                      |return { asn = asn }""".trimMargin())
-            val data = CardData("北京一卡通（非互联互通版）", listOf(Pair("asn", ret.get("asn").checkjstring())))
-            card.close()
-            return data
+            Script().queryAll().forEach { s ->
+                card.connect()
+                val ret = LuaExecutor.execute(s.content)
+                val data = CardData(s.title, listOf(Pair("asn", ret.get("asn").checkjstring())))
+                println(data)
+                card.close()
+            }
         }
         return null
     }
