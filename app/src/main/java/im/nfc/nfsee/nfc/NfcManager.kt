@@ -6,9 +6,11 @@ import android.content.Intent
 import android.nfc.NfcAdapter
 import android.nfc.Tag
 import android.nfc.tech.*
-import com.vicpin.krealmextensions.queryAll
+import com.vicpin.krealmextensions.querySorted
 import im.nfc.nfsee.models.Script
+import io.realm.Sort
 import org.jetbrains.anko.AnkoLogger
+import sc
 
 
 class NfcManager(private val act: Activity) : AnkoLogger {
@@ -39,12 +41,17 @@ class NfcManager(private val act: Activity) : AnkoLogger {
     fun readCard(tag: Tag): CardData? {
         if (tag.techList.contains(IsoDep::class.java.name)) {
             val card = IsoDep.get(tag)
-            smartcard.card = card
-            Script().queryAll().forEach { s ->
+            sc.card = card
+            Script().querySorted("priority", Sort.ASCENDING).forEach { s ->
                 card.connect()
                 val ret = LuaExecutor.execute(s.content)
-                val data = CardData(s.title, listOf(Pair("asn", ret.get("asn").checkjstring())))
-                println(data)
+//                val data = CardData(s.title, listOf(Pair("asn", ret.get("asn").checkjstring())))
+                val table = ret["table"].checktable()
+                table.keys().forEach { key ->
+                    print(key.checkjstring())
+                    print(": ")
+                    println(table[key].checkjstring())
+                }
                 card.close()
             }
         }

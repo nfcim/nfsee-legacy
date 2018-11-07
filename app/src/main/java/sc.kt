@@ -9,7 +9,7 @@ import org.luaj.vm2.lib.TwoArgFunction
 import java.lang.Exception
 import java.nio.charset.Charset
 
-class smartcard : TwoArgFunction() {
+class sc : TwoArgFunction() {
     companion object {
         var card: IsoDep? = null
     }
@@ -26,8 +26,8 @@ class smartcard : TwoArgFunction() {
         library.set("hextoint", hextoint())
         library.set("parsegbk", parsegbk())
         library.set("parseutf8", parseutf8())
-        env.set("smartcard", library)
-        env.get("package").get("loaded").set("smartcard", library)
+        env.set("sc", library)
+        env.get("package").get("loaded").set("sc", library)
         return library
     }
 
@@ -124,7 +124,7 @@ class smartcard : TwoArgFunction() {
     class transceive : OneArgFunction() {
         override fun call(capdu: LuaValue): LuaValue {
             return try {
-                LuaValue.valueOf(smartcard.card?.transceive(capdu.checkjstring().hexToBytes())!!.toHexString())
+                LuaValue.valueOf(sc.card?.transceive(capdu.checkjstring().hexToBytes())!!.toHexString())
             } catch (ex: Exception) {
                 LuaValue.NIL
             }
