@@ -7,6 +7,7 @@ import org.luaj.vm2.lib.OneArgFunction
 import org.luaj.vm2.lib.ThreeArgFunction
 import org.luaj.vm2.lib.TwoArgFunction
 import java.lang.Exception
+import java.nio.charset.Charset
 
 class smartcard : TwoArgFunction() {
     companion object {
@@ -21,6 +22,10 @@ class smartcard : TwoArgFunction() {
         library.set("pbocderive", pbocderive())
         library.set("pbocmac", pbocmac())
         library.set("transceive", transceive())
+        library.set("isok", isok())
+        library.set("hextoint", hextoint())
+        library.set("parsegbk", parsegbk())
+        library.set("parseutf8", parseutf8())
         env.set("smartcard", library)
         env.get("package").get("loaded").set("smartcard", library)
         return library
@@ -120,6 +125,48 @@ class smartcard : TwoArgFunction() {
         override fun call(capdu: LuaValue): LuaValue {
             return try {
                 LuaValue.valueOf(smartcard.card?.transceive(capdu.checkjstring().hexToBytes())!!.toHexString())
+            } catch (ex: Exception) {
+                LuaValue.NIL
+            }
+        }
+    }
+
+    class isok : OneArgFunction() {
+        override fun call(arg: LuaValue): LuaValue {
+            return try {
+                LuaValue.valueOf(arg.checkjstring().endsWith("9000"))
+            } catch (ex: Exception) {
+                LuaValue.NIL
+            }
+        }
+    }
+
+    class hextoint : OneArgFunction() {
+        override fun call(arg: LuaValue): LuaValue {
+            return try {
+                LuaValue.valueOf(arg.checkjstring().toInt(16))
+            } catch (ex: Exception) {
+                LuaValue.NIL
+            }
+        }
+    }
+
+    class parsegbk : OneArgFunction() {
+        override fun call(arg: LuaValue): LuaValue {
+            return try {
+                val rawBytes = arg.checkjstring().hexToBytes()
+                LuaValue.valueOf(String(rawBytes, Charset.forName("GBK")))
+            } catch (ex: Exception) {
+                LuaValue.NIL
+            }
+        }
+    }
+
+    class parseutf8 : OneArgFunction() {
+        override fun call(arg: LuaValue): LuaValue {
+            return try {
+                val rawBytes = arg.checkjstring().hexToBytes()
+                LuaValue.valueOf(String(rawBytes, Charset.forName("UTF-8")))
             } catch (ex: Exception) {
                 LuaValue.NIL
             }
