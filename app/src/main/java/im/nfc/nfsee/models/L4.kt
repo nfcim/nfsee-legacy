@@ -19,7 +19,7 @@ class L4Module {
                         if string.sub(number, 1, 4) ~= '1000' then return nil end
                         sc.transceive('00A40000021001')
                         balance_resp = sc.transceive('805C000204')
-                        balance = sc.hextoint(string.sub(balance_resp, 1, 8))
+                        balance = tostring(sc.hextoint(string.sub(balance_resp, 1, 8)) / 100)..'元'
                         return {
                           table = { ['卡号'] = number, ['余额'] = balance },
                           records = {}

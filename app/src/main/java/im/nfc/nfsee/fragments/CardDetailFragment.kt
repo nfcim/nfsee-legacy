@@ -11,7 +11,12 @@ import kotlinx.android.synthetic.main.fragment_card_detail.view.*
 class CardDetailFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val detailView = inflater.inflate(R.layout.fragment_card_detail, container, false)
+
         detailView.card_detail_title.text = arguments!!["title"] as String
+
+        val table = arguments!!["table"] as List<Pair<String, String>>
+        detailView.card_data_table.text = table.joinToString("\n") { p -> "${p.first}: ${p.second}" }
+
         return detailView
     }
 }

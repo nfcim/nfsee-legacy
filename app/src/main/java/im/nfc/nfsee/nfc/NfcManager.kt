@@ -45,14 +45,13 @@ class NfcManager(private val act: Activity) : AnkoLogger {
             Script().querySorted("priority", Sort.ASCENDING).forEach { s ->
                 card.connect()
                 val ret = LuaExecutor.execute(s.content)
-//                val data = CardData(s.title, listOf(Pair("asn", ret.get("asn").checkjstring())))
+                if (ret.isnil()) return@forEach
                 val table = ret["table"].checktable()
-                table.keys().forEach { key ->
-                    print(key.checkjstring())
-                    print(": ")
-                    println(table[key].checkjstring())
-                }
+                val data = CardData(s.title, table.keys().map { key ->
+                    Pair(key.checkjstring(), table[key].checkjstring())
+                })
                 card.close()
+                return data
             }
         }
         return null

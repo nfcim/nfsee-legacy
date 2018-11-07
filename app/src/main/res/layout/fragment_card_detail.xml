@@ -53,57 +53,63 @@
                         android:src="@drawable/ic_delete_24dp"
                         android:tint="@color/material_black_color" />
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/card_custom_name"
+                    <!--<com.google.android.material.textfield.TextInputLayout-->
+                        <!--android:id="@+id/card_custom_name"-->
+                        <!--android:layout_width="fill_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_below="@id/card_detail_title"-->
+                        <!--android:layout_marginBottom="5.0dip"-->
+                        <!--android:textColor="@color/material_black_color"-->
+                        <!--android:textSize="12.0sp"-->
+                        <!--android:visibility="gone">-->
+
+                        <!--<androidx.appcompat.widget.AppCompatEditText-->
+                            <!--android:id="@+id/card_custom_name_input"-->
+                            <!--android:layout_width="fill_parent"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:layout_marginTop="2.0dip"-->
+                            <!--android:background="@android:color/transparent"-->
+                            <!--android:gravity="center"-->
+                            <!--android:hint="@string/card_name_title"-->
+                            <!--android:imeOptions="actionDone"-->
+                            <!--android:inputType="textCapCharacters"-->
+                            <!--android:maxLines="1" />-->
+                    <!--</com.google.android.material.textfield.TextInputLayout>-->
+
+                    <!--<ImageView-->
+                        <!--android:id="@+id/extended_card_more"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_alignParentRight="true"-->
+                        <!--android:layout_alignParentTop="true"-->
+                        <!--android:background="?android:selectableItemBackground"-->
+                        <!--android:padding="5.0dip"-->
+                        <!--android:src="@drawable/ic_more_vert_24dp"-->
+                        <!--android:visibility="gone" />-->
+
+                    <!--&lt;!&ndash; to be implemented &ndash;&gt;-->
+                    <!--<RelativeLayout-->
+                        <!--android:id="@+id/card_view"-->
+                        <!--android:layout_width="280.0dip"-->
+                        <!--android:layout_height="180.0dip"-->
+                        <!--android:layout_below="@id/card_custom_name"-->
+                        <!--android:layout_centerInParent="true" />-->
+
+                    <TextView
+                        android:id="@+id/card_data_table"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/card_detail_title"
-                        android:layout_marginBottom="5.0dip"
-                        android:textColor="@color/material_black_color"
-                        android:textSize="12.0sp"
-                        android:visibility="gone">
-
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/card_custom_name_input"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2.0dip"
-                            android:background="@android:color/transparent"
-                            android:gravity="center"
-                            android:hint="@string/card_name_title"
-                            android:imeOptions="actionDone"
-                            android:inputType="textCapCharacters"
-                            android:maxLines="1" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <ImageView
-                        android:id="@+id/extended_card_more"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentTop="true"
-                        android:background="?android:selectableItemBackground"
-                        android:padding="5.0dip"
-                        android:src="@drawable/ic_more_vert_24dp"
-                        android:visibility="gone" />
-
-                    <!-- to be implemented -->
-                    <RelativeLayout
-                        android:id="@+id/card_view"
-                        android:layout_width="280.0dip"
-                        android:layout_height="180.0dip"
-                        android:layout_below="@id/card_custom_name"
-                        android:layout_centerInParent="true" />
+                        android:layout_below="@id/card_detail_title"/>
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
 
-            <include layout="@layout/card_detail_item" />
+            <!--<include layout="@layout/card_detail_item" />-->
 
-            <androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/recycler_view"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone" />
+            <!--<androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"-->
+                <!--android:id="@+id/recycler_view"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:visibility="gone" />-->
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
