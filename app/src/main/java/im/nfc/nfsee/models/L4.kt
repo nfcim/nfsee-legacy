@@ -13,21 +13,33 @@ class L4Module {
             listOf(
                     Script("北京一卡通（非互联互通版）", 0, """
                         require 'sc'
-                        info = sc.transceive('00B0840000')
-                        if not sc.isok(info) then return nil end
-                        number = string.sub(info, 1, 16)
+                        rapdu = sc.transceive('00B0840000')
+                        if not sc.isok(rapdu) then return nil end
+                        number = string.sub(rapdu, 1, 16)
                         if string.sub(number, 1, 4) ~= '1000' then return nil end
+                        issue_date = string.sub(rapdu, 49, 56)
+                        expire_date = string.sub(rapdu, 57, 64)
+                        rapdu = sc.transceive('00B0850000')
+                        overdraw = tostring(sc.hextoint(string.sub(rapdu, 1, 6)) / 100)..'元'
+                        total_atc = tostring(sc.hextoint(string.sub(rapdu, 7, 10)))
                         sc.transceive('00A40000021001')
-                        balance_resp = sc.transceive('805C000204')
-                        balance = tostring(sc.hextoint(string.sub(balance_resp, 1, 8)) / 100)..'元'
+                        rapdu = sc.transceive('805C000204')
+                        balance = tostring(sc.hextoint(string.sub(rapdu, 1, 8)) / 100)..'元'
                         for i = 1, 10 do
-                            record = sc.transceive('00B20'..string.upper(string.format('%x', i))..'C400')
-                            if not sc.isok(record) then break end
-                            sc.addpboctrans(record)
+                            rapdu = sc.transceive('00B20'..string.upper(string.format('%x', i))..'C400')
+                            if not sc.isok(rapdu) then break end
+                            sc.addpboctrans(rapdu)
                         end
+                        rapdu = sc.transceive('00B0940000')
+                        last_bus = tostring(sc.hextoint(string.sub(rapdu, 17, 20)))
                         return {
                           [1] = {'卡号', number},
-                          [2] = {'余额', balance}
+                          [2] = {'余额', balance},
+                          [3] = {'发卡日期', issue_date},
+                          [4] = {'失效日期', expire_date},
+                          [5] = {'透支金额', overdraw},
+                          [6] = {'累计交易次数', total_atc},
+                          [7] = {'最近乘坐公交线路', last_bus}
                         }
                     """.trimIndent()),
                     Script("清华大学校园卡", 1, """
