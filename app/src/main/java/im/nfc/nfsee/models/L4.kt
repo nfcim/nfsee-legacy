@@ -31,6 +31,8 @@ class L4Module {
                         -- if not sc.isok(info) then return nil end
                         info = sc.transceive('00B0950021')
                         if not sc.isok(info) then return nil end
+                        info = sc.transceive('00A4040009A00000000386980703')
+                        if not sc.isok(info) then return nil end -- to distinguish cards
                         number = string.sub(info, 13, 20)
                         dueDate = string.sub(info, 25, 30)
                         writtenDueDate = string.sub(info, 31, 36)
@@ -41,7 +43,7 @@ class L4Module {
                         balance_resp = sc.transceive('805C000104')
                         name = sc.parsegbk(string.sub(info, 1, 40))
                         stuNum = sc.parseutf8(string.sub(info, 57, 76))
-                        balance = tostring(sc.hextoint(string.sub(balance_resp, 1, 8)) / 100)..'元'
+                        balance = tostring(sc.hextoint(string.sub(balance_resp, 1, 8)) / 100)
                         return {
                           table = {
                             ['卡号'] = number,
@@ -49,7 +51,7 @@ class L4Module {
                             ['卡面有效期'] = "20"..writtenDueDate,
                             ['姓名'] = name,
                             ['学号/工号'] = stuNum,
-                            ['余额'] = balance },
+                            ['余额'] = balance..'元' },
                           records = {}
                         }
                     """.trimIndent())
