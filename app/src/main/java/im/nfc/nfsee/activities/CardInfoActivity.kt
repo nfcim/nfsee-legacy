@@ -39,12 +39,16 @@ class CardInfoActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
     }
 
     private fun initFragments() {
-        val detailFragment = CardDetailFragment()
         val card = intent.extras!!["data"] as CardData
+
+        val detailFragment = CardDetailFragment()
         detailFragment.arguments = bundleOf("title" to card.title, "table" to card.table)
         fragments.add(detailFragment)
 
-        fragments.add(CardTransactionFragment())
+        val transactionFragment = CardTransactionFragment()
+        transactionFragment.arguments = bundleOf("transactions" to card.transactions)
+        fragments.add(transactionFragment)
+
         fragments.add(CardLogFragment())
     }
 }

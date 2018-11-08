@@ -20,9 +20,14 @@ class L4Module {
                         sc.transceive('00A40000021001')
                         balance_resp = sc.transceive('805C000204')
                         balance = tostring(sc.hextoint(string.sub(balance_resp, 1, 8)) / 100)..'元'
+                        for i = 1, 10 do
+                            record = sc.transceive('00B20'..string.upper(string.format('%x', i))..'C400')
+                            if not sc.isok(record) then break end
+                            sc.addpboctrans(record)
+                        end
                         return {
-                          table = { [1] = {'卡号', number}, [2] = {'余额', balance} },
-                          records = {}
+                          [1] = {'卡号', number},
+                          [2] = {'余额', balance}
                         }
                     """.trimIndent()),
                     Script("清华大学校园卡", 1, """
@@ -42,15 +47,12 @@ class L4Module {
                         stuNum = sc.parseutf8(string.sub(info, 57, 76))
                         balance = tostring(sc.hextoint(string.sub(balance_resp, 1, 8)) / 100)
                         return {
-                          table = {
-                            [1] = {'卡号', number},
-                            [2] = {'实际有效期', '20'..dueDate},
-                            [3] = {'卡面有效期', '20'..writtenDueDate},
-                            [4] = {'姓名', name},
-                            [5] = {'学号/工号', stuNum},
-                            [6] = {'余额', balance..'元'}
-                          },
-                          records = {}
+                          [1] = {'卡号', number},
+                          [2] = {'实际有效期', '20'..dueDate},
+                          [3] = {'卡面有效期', '20'..writtenDueDate},
+                          [4] = {'姓名', name},
+                          [5] = {'学号/工号', stuNum},
+                          [6] = {'余额', balance..'元'}
                         }
                     """.trimIndent())
             ).saveAll()

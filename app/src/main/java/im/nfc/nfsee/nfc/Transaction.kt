@@ -5,6 +5,7 @@ import im.nfc.nfsee.utils.ByteUtils.hexToBytes
 import im.nfc.nfsee.utils.ByteUtils.beToShort
 import im.nfc.nfsee.utils.ByteUtils.beToInt
 import im.nfc.nfsee.utils.DatetimeUtils.shortDateTime
+import java.io.Serializable
 
 
 enum class TransactionType {
@@ -20,7 +21,7 @@ data class Transaction(var atc: Int,
                        var currency: String,
                        var terminalId: String,
                        var merchant: String,
-                       var extra: String) {
+                       var extra: String) : Serializable {
     companion object {
         private fun parseType(type: String): TransactionType {
             return when (type) {

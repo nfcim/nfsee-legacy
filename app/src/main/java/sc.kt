@@ -1,4 +1,5 @@
 import android.nfc.tech.IsoDep
+import im.nfc.nfsee.nfc.Transaction
 import im.nfc.nfsee.utils.ByteUtils.hexToBytes
 import im.nfc.nfsee.utils.ByteUtils.toHexString
 import im.nfc.nfsee.utils.Crypto
@@ -14,6 +15,7 @@ class sc : TwoArgFunction() {
     companion object {
         var card: IsoDep? = null
         var type: String? = null
+        val transactions = mutableListOf<Transaction>()
     }
 
     override fun call(modname: LuaValue, env: LuaValue): LuaValue {
@@ -29,6 +31,7 @@ class sc : TwoArgFunction() {
         library.set("parsegbk", parsegbk())
         library.set("parseutf8", parseutf8())
         library.set("cardtype", cardtype())
+        library.set("addpboctrans", addpboctrans())
         env.set("sc", library)
         env.get("package").get("loaded").set("sc", library)
         return library
@@ -183,6 +186,16 @@ class sc : TwoArgFunction() {
     class cardtype : ZeroArgFunction() {
         override fun call(): LuaValue {
             return LuaValue.valueOf(type)
+        }
+    }
+
+    class addpboctrans: OneArgFunction() {
+        override fun call(arg: LuaValue): LuaValue {
+            try {
+                val hexString = arg.checkjstring()
+                transactions.add(Transaction.parseEP(hexString))
+            } catch (ex: Exception) {}
+            return LuaValue.NIL
         }
     }
 }

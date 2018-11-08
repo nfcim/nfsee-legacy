@@ -17,4 +17,8 @@ object DatetimeUtils {
     fun LocalDateTime.toShortDateTimeString() = this.toString("yyyyMMddHHmmss")!!
 
     fun LocalDateTime.toFullDateTimeString() = this.toString("yyyy-MM-dd H:mm:ss")!!
+
+    fun LocalDateTime.toLongDate() = this.toString("yyyy-MM-dd")!!
+
+    fun LocalDateTime.toLongTime() = this.toString("H:mm:ss")!!
 }

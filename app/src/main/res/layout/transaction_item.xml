@@ -101,7 +101,7 @@
                 </TableRow>
 
                 <TableRow
-                    android:id="@+id/row_transaction_country"
+                    android:id="@+id/row_transaction_location"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5.0dip">
@@ -109,13 +109,13 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/transaction_country"
+                        android:text="@string/transaction_location"
                         android:textColor="#ff222222"
                         android:textSize="13.0sp"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/transaction_county"
+                        android:id="@+id/transaction_location"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="7.0dip"
@@ -149,7 +149,7 @@
                 </TableRow>
 
                 <TableRow
-                    android:id="@+id/row_transaction_crypto"
+                    android:id="@+id/row_transaction_extra"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5.0dip">
@@ -157,13 +157,13 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/transaction_cryptogram"
+                        android:text="@string/transaction_extra"
                         android:textColor="#ff222222"
                         android:textSize="13.0sp"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/transaction_cryptogram"
+                        android:id="@+id/transaction_extra"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="7.0dip"

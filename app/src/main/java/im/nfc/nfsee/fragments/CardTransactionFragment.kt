@@ -16,10 +16,10 @@ import org.joda.time.LocalDateTime
 
 class CardTransactionFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val transactions = arguments!!["transactions"] as List<Transaction>
         val transactionView = inflater.inflate(R.layout.fragment_tranactions, container, false)
-        val testTransaction = Transaction(100, 100, LocalDateTime.now(), TransactionType.Purchase,"CNY", "Test", "Test", "Test")
         transactionView.list_history.layoutManager = LinearLayoutManager(this.context)
-        transactionView.list_history.adapter = TransactionAdapter(List(20){testTransaction}, this.context!!)
+        transactionView.list_history.adapter = TransactionAdapter(transactions, this.context!!)
         return transactionView
     }
 }

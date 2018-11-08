@@ -48,6 +48,7 @@ class NfcManager(private val act: Activity) : AnkoLogger {
                 else -> sc.type = "Unknown"
             }
             Script().querySorted("priority", Sort.ASCENDING).forEach { s ->
+                sc.transactions.clear()
                 if (card.isConnected)
                     card.close()
                 card.connect()
@@ -56,12 +57,12 @@ class NfcManager(private val act: Activity) : AnkoLogger {
                     card.close()
                     return@forEach
                 }
-                val table = ret["table"].checktable()
-                val dataTable = (1..table.keyCount()).map { idx ->
-                    val item = table[idx].checktable()
+                val retTable = ret.checktable()
+                val dataTable = (1..retTable.keyCount()).map { idx ->
+                    val item = retTable[idx].checktable()
                     Pair(item[1].checkjstring(), item[2].checkjstring())
                 }
-                val data = CardData(s.title, dataTable)
+                val data = CardData(s.title, dataTable, sc.transactions)
                 card.close()
                 return data
             }

@@ -8,12 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import im.nfc.nfsee.R
 import im.nfc.nfsee.nfc.Transaction
 import im.nfc.nfsee.nfc.TransactionType
+import im.nfc.nfsee.utils.DatetimeUtils.toLongDate
+import im.nfc.nfsee.utils.DatetimeUtils.toLongTime
 import kotlinx.android.synthetic.main.transaction_item.view.*
 
 class TransactionAdapter(private val items: List<Transaction>, context: Context) : RecyclerView.Adapter<TransactionAdapter.ViewHolder>() {
-
-    private val dateFormat = android.text.format.DateFormat.getDateFormat(context)
-    private val timeFormat = android.text.format.DateFormat.getTimeFormat(context)
 
     private val expanded = MutableList(items.size) { false }
 
@@ -50,12 +49,11 @@ class TransactionAdapter(private val items: List<Transaction>, context: Context)
         fun bind(item: Transaction, position: Int) = with(view) {
             super.bind(position)
             tag = position
-            val date = item.datetime.toDate()
-            transaction_date.text = dateFormat.format(date)
-            transaction_time.text = timeFormat.format(date)
-            transaction_county.text = item.merchant
+            transaction_date.text = item.datetime.toLongDate()
+            transaction_time.text = item.datetime.toLongTime()
+            transaction_location.text = item.terminalId
             transaction_symbol.text = item.currency
-            transaction_price.text = item.amount.toString()
+            transaction_price.text = String.format("%d.%02d", item.amount / 100, item.amount % 100)
             transaction_type.text = getTransactionTypeString(item.type)
         }
     }
