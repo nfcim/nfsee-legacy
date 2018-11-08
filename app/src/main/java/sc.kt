@@ -6,12 +6,14 @@ import org.luaj.vm2.LuaValue
 import org.luaj.vm2.lib.OneArgFunction
 import org.luaj.vm2.lib.ThreeArgFunction
 import org.luaj.vm2.lib.TwoArgFunction
+import org.luaj.vm2.lib.ZeroArgFunction
 import java.lang.Exception
 import java.nio.charset.Charset
 
 class sc : TwoArgFunction() {
     companion object {
         var card: IsoDep? = null
+        var type: String? = null
     }
 
     override fun call(modname: LuaValue, env: LuaValue): LuaValue {
@@ -26,6 +28,7 @@ class sc : TwoArgFunction() {
         library.set("hextoint", hextoint())
         library.set("parsegbk", parsegbk())
         library.set("parseutf8", parseutf8())
+        library.set("cardtype", cardtype())
         env.set("sc", library)
         env.get("package").get("loaded").set("sc", library)
         return library
@@ -124,7 +127,11 @@ class sc : TwoArgFunction() {
     class transceive : OneArgFunction() {
         override fun call(capdu: LuaValue): LuaValue {
             return try {
-                LuaValue.valueOf(sc.card?.transceive(capdu.checkjstring().hexToBytes())!!.toHexString())
+                val cmd = capdu.checkjstring()
+                val resp = sc.card?.transceive(cmd.hexToBytes())!!.toHexString()
+                println(cmd)
+                println(resp)
+                LuaValue.valueOf(resp)
             } catch (ex: Exception) {
                 LuaValue.NIL
             }
@@ -170,6 +177,12 @@ class sc : TwoArgFunction() {
             } catch (ex: Exception) {
                 LuaValue.NIL
             }
+        }
+    }
+
+    class cardtype : ZeroArgFunction() {
+        override fun call(): LuaValue {
+            return LuaValue.valueOf(type)
         }
     }
 }

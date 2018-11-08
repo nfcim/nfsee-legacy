@@ -21,18 +21,15 @@ class L4Module {
                         balance_resp = sc.transceive('805C000204')
                         balance = tostring(sc.hextoint(string.sub(balance_resp, 1, 8)) / 100)..'元'
                         return {
-                          table = { ['卡号'] = number, ['余额'] = balance },
+                          table = { [1] = {'卡号', number}, [2] = {'余额', balance} },
                           records = {}
                         }
                     """.trimIndent()),
-                    Script("清华大学一卡通", 1, """
+                    Script("清华大学校园卡", 1, """
                         require 'sc'
-                        -- info = sc.transceive('00A404000A535A594B542E524F4F54')
-                        -- if not sc.isok(info) then return nil end
+                        if sc.cardtype() ~= 'B' then return nil end
                         info = sc.transceive('00B0950021')
                         if not sc.isok(info) then return nil end
-                        info = sc.transceive('00A4040009A00000000386980703')
-                        if not sc.isok(info) then return nil end -- to distinguish cards
                         number = string.sub(info, 13, 20)
                         dueDate = string.sub(info, 25, 30)
                         writtenDueDate = string.sub(info, 31, 36)
@@ -46,12 +43,13 @@ class L4Module {
                         balance = tostring(sc.hextoint(string.sub(balance_resp, 1, 8)) / 100)
                         return {
                           table = {
-                            ['卡号'] = number,
-                            ['实际有效期'] = "20"..dueDate,
-                            ['卡面有效期'] = "20"..writtenDueDate,
-                            ['姓名'] = name,
-                            ['学号/工号'] = stuNum,
-                            ['余额'] = balance..'元' },
+                            [1] = {'卡号', number},
+                            [2] = {'实际有效期', '20'..dueDate},
+                            [3] = {'卡面有效期', '20'..writtenDueDate},
+                            [4] = {'姓名', name},
+                            [5] = {'学号/工号', stuNum},
+                            [6] = {'余额', balance..'元'}
+                          },
                           records = {}
                         }
                     """.trimIndent())
