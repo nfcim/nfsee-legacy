@@ -28,7 +28,7 @@ class L4Module {
                         for i = 1, 10 do
                             rapdu = sc.transceive('00B20'..string.upper(string.format('%x', i))..'C400')
                             if not sc.isok(rapdu) then break end
-                            sc.addpboctrans(rapdu)
+                            sc.addeptrans(rapdu)
                         end
                         rapdu = sc.transceive('00B0940000')
                         last_bus = tostring(sc.hextoint(string.sub(rapdu, 17, 20)))

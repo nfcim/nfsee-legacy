@@ -33,7 +33,7 @@ class sc : TwoArgFunction() {
         library.set("parsegbk", parsegbk())
         library.set("parseutf8", parseutf8())
         library.set("cardtype", cardtype())
-        library.set("addpboctrans", addpboctrans())
+        library.set("addeptrans", addeptrans())
         env.set("sc", library)
         env.get("package").get("loaded").set("sc", library)
         return library
@@ -190,7 +190,7 @@ class sc : TwoArgFunction() {
         }
     }
 
-    class addpboctrans: OneArgFunction() {
+    class addeptrans: OneArgFunction() {
         override fun call(arg: LuaValue): LuaValue {
             try {
                 val hexString = arg.checkjstring()
