@@ -1,6 +1,7 @@
 package im.nfc.nfsee.nfc
 
 import im.nfc.nfsee.models.CardType
+import im.nfc.nfsee.models.database.BMAC
 import org.joda.time.LocalDateTime
 import im.nfc.nfsee.utils.ByteUtils.hexToBytes
 import im.nfc.nfsee.utils.ByteUtils.beToShort
@@ -50,7 +51,22 @@ data class Transaction(var atc: Int,
         }
 
         private fun parseMerchant(data: String): String {
-            return ""
+            val terminalId = data.substring(20, 32)
+            return when (sc.nowType!!) {
+                CardType.BMAC -> {
+                    if (terminalId.startsWith("0001"))
+                        "公交"
+                    else if (!terminalId.startsWith("30"))
+                        "未知"
+                    else {
+                        val line = terminalId.substring(3, 5).toInt()
+                        BMAC.metroLine.getOrElse(line) { "未知" }
+                    }
+                }
+                else -> {
+                    "未知"
+                }
+            } + "（${terminalId}）"
         }
 
         fun parseEP(data: String): Transaction {
@@ -64,7 +80,6 @@ data class Transaction(var atc: Int,
                     parseMerchant(data),
                     parseExtra(data)
             )
-
         }
     }
 }

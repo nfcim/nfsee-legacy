@@ -45,7 +45,12 @@ class L4Module {
                             sc.add_ep_trans(rapdu)
                         end
                         rapdu = sc.transceive('00B0940000')
-                        last_bus = tostring(sc.hex_to_int(string.sub(rapdu, 17, 20)))
+                        last_bus_num = sc.hex_to_int(string.sub(rapdu, 17, 20))
+                        if last_bus_num <= 999 then
+                            last_bus = tostring(last_bus_num)
+                        else
+                            last_bus = '-'
+                        end
                         rapdu = sc.transceive('00B0950000')
                         last_metro_in = tostring(sc.hex_to_int(string.sub(rapdu, 11, 12)))
                         last_metro_out = tostring(sc.hex_to_int(string.sub(rapdu, 41, 42)))
@@ -54,7 +59,7 @@ class L4Module {
                           [2] = {'余额', balance},
                           [3] = {'发卡日期', issue_date},
                           [4] = {'失效日期', expire_date},
-                          [5] = {'透支金额', overdraw},
+                          [5] = {'当前透支金额', overdraw},
                           [6] = {'累计交易次数', total_atc},
                           [7] = {'最近乘坐公交线路', last_bus},
                           [8] = {'最近乘坐地铁', last_metro_in..'号线 - '..last_metro_out..'号线'}

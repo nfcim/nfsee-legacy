@@ -57,7 +57,7 @@ class TransactionAdapter(private val items: List<Transaction>, context: Context)
             tag = position
             transaction_date.text = item.datetime.toLongDate()
             transaction_time.text = item.datetime.toLongTime()
-            transaction_location.text = item.terminalId
+            transaction_location.text = item.merchant
             transaction_symbol.text = item.currency
 
             val sign = when (item.type) {
@@ -69,8 +69,6 @@ class TransactionAdapter(private val items: List<Transaction>, context: Context)
                     item.amount / 100, item.amount % 100)
 
             transaction_type.text = getTransactionTypeString(item.type)
-            transaction_extra.text = item.extra
-
         }
     }
 }

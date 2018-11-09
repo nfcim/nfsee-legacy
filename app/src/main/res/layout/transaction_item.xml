@@ -146,29 +146,29 @@
                         android:paddingStart="7.0dip" />
                 </TableRow>
 
-                <TableRow
-                    android:id="@+id/row_transaction_extra"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5.0dip">
+                <!--<TableRow-->
+                    <!--android:id="@+id/row_transaction_extra"-->
+                    <!--android:layout_width="fill_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginBottom="5.0dip">-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/transaction_extra"
-                        android:textColor="#ff222222"
-                        android:textSize="13.0sp"
-                        android:textStyle="bold" />
+                    <!--<TextView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="@string/transaction_extra"-->
+                        <!--android:textColor="#ff222222"-->
+                        <!--android:textSize="13.0sp"-->
+                        <!--android:textStyle="bold" />-->
 
-                    <TextView
-                        android:id="@+id/transaction_extra"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="7.0dip"
-                        android:textColor="#ff222222"
-                        android:textSize="12.0sp"
-                        android:paddingStart="7.0dip" />
-                </TableRow>
+                    <!--<TextView-->
+                        <!--android:id="@+id/transaction_extra"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:paddingLeft="7.0dip"-->
+                        <!--android:textColor="#ff222222"-->
+                        <!--android:textSize="12.0sp"-->
+                        <!--android:paddingStart="7.0dip" />-->
+                <!--</TableRow>-->
             </TableLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
