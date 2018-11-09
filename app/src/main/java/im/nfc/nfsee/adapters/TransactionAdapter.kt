@@ -36,11 +36,13 @@ class TransactionAdapter(private val items: List<Transaction>, context: Context)
                 when (visibility) {
                     false -> {
                         transaction_detail.visibility = View.GONE
-                        transaction_indicator.setText(R.string.fa_angle_down)
+                        transaction_indicator.
+                                setImageResource(R.drawable.ic_keyboard_arrow_down_black_24dp)
                     }
                     true -> {
                         transaction_detail.visibility = View.VISIBLE
-                        transaction_indicator.setText(R.string.fa_angle_up)
+                        transaction_indicator.
+                                setImageResource(R.drawable.ic_keyboard_arrow_up_black_24dp)
                     }
                 }
             }

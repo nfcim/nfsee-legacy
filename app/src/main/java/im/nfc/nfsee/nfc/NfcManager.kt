@@ -42,10 +42,10 @@ class NfcManager(private val act: Activity) : AnkoLogger {
         if (tag.techList.contains(IsoDep::class.java.name)) {
             val card = IsoDep.get(tag)
             sc.card = card
-            when {
-                tag.techList.contains(NfcA::class.java.name) -> sc.type = "A"
-                tag.techList.contains(NfcB::class.java.name) -> sc.type = "B"
-                else -> sc.type = "Unknown"
+            sc.type = when {
+                tag.techList.contains(NfcA::class.java.name) -> "A"
+                tag.techList.contains(NfcB::class.java.name) -> "B"
+                else -> "Unknown"
             }
             Script().querySorted("priority", Sort.ASCENDING).forEach { s ->
                 sc.transactions.clear()

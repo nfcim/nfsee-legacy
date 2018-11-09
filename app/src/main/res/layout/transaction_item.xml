@@ -29,13 +29,11 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <TextView
+                <ImageView
                     android:id="@+id/transaction_indicator"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/fa_regular_400"
-                    android:text="@string/fa_angle_down"
-                    android:textSize="23.0sp" />
+                    android:src="@drawable/ic_keyboard_arrow_down_black_24dp" />
 
                 <TextView
                     android:id="@+id/transaction_date"
