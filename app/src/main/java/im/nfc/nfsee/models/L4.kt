@@ -16,7 +16,8 @@ open class Card(
 
 enum class CardType {
     BMAC,
-    THUCARD
+    THUCARD,
+    CITY_UNION
 }
 
 
@@ -94,7 +95,30 @@ class L4Module {
                           [5] = {'学号/工号', stuNum},
                           [6] = {'余额', balance..'元'}
                         }
-                    """.trimIndent(), R.drawable.card_thucard, CardType.THUCARD.name)
+                    """.trimIndent(), R.drawable.card_thucard, CardType.THUCARD.name),
+                    Card("城市一卡通（City Union）", 2, """
+                        require 'sc'
+                        rapdu = sc.transceive('00A4040009A00000000386980701')
+                        if not sc.is_ok(rapdu) then return nil end
+                        rapdu = sc.transceive('00B0950000')
+                        number = string.sub(rapdu, 25, 40)
+                        issue_date = string.sub(rapdu, 41, 48)
+                        expire_date = string.sub(rapdu, 49, 56)
+                        rapdu = sc.transceive('00B0850000')
+                        rapdu = sc.transceive('805C000204')
+                        balance = tostring(sc.hex_to_int(string.sub(rapdu, 1, 8)) / 100)..'元'
+                        for i = 1, 10 do
+                            rapdu = sc.transceive('00B20'..string.upper(string.format('%x', i))..'C400')
+                            if not sc.is_ok(rapdu) then break end
+                            sc.add_ep_trans(rapdu)
+                        end
+                        return {
+                          [1] = {'卡号', number},
+                          [2] = {'余额', balance},
+                          [3] = {'发卡日期', issue_date},
+                          [4] = {'失效日期', expire_date}
+                        }
+                    """.trimIndent(), R.drawable.card_bmac, CardType.CITY_UNION.name)
             ).saveAll()
         }
     }
