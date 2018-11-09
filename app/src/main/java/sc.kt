@@ -1,6 +1,6 @@
 import android.nfc.tech.IsoDep
 import im.nfc.nfsee.models.CardType
-import im.nfc.nfsee.nfc.Transaction
+import im.nfc.nfsee.models.Transaction
 import im.nfc.nfsee.nfc.TransceiveLog
 import im.nfc.nfsee.utils.ByteUtils.hexToBytes
 import im.nfc.nfsee.utils.ByteUtils.toHexString

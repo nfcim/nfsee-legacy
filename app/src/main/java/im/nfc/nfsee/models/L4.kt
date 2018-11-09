@@ -77,10 +77,15 @@ class L4Module {
                         if not sc.is_ok(info) then return nil end
                         info = sc.transceive('00B0960027')
                         if not sc.is_ok(info) then return nil end
-                        balance_resp = sc.transceive('805C000104')
                         name = sc.parse_gbk(string.sub(info, 1, 40))
                         stuNum = sc.parse_utf8(string.sub(info, 57, 76))
+                        balance_resp = sc.transceive('805C000104')
                         balance = tostring(sc.hex_to_int(string.sub(balance_resp, 1, 8)) / 100)
+                        for i = 1, 10 do
+                            rapdu = sc.transceive('00B20'..string.upper(string.format('%x', i))..'C400')
+                            if not sc.is_ok(rapdu) then break end
+                            sc.add_ep_trans(rapdu)
+                        end
                         return {
                           [1] = {'卡号', number},
                           [2] = {'实际有效期', '20'..dueDate},

@@ -1,6 +1,5 @@
-package im.nfc.nfsee.nfc
+package im.nfc.nfsee.models
 
-import im.nfc.nfsee.models.CardType
 import im.nfc.nfsee.models.database.BMAC
 import org.joda.time.LocalDateTime
 import im.nfc.nfsee.utils.ByteUtils.hexToBytes
@@ -28,7 +27,9 @@ data class Transaction(var atc: Int,
     companion object {
         private fun parseType(type: String): TransactionType {
             return when (type) {
+                "01" -> TransactionType.Load
                 "02" -> TransactionType.Load
+                "05" -> TransactionType.Purchase
                 "06" -> TransactionType.Purchase
                 "09" -> TransactionType.Purchase
                 else -> TransactionType.Unknown

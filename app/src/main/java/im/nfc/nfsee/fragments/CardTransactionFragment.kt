@@ -8,12 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import im.nfc.nfsee.R
 import im.nfc.nfsee.adapters.TransactionAdapter
-import im.nfc.nfsee.models.CardType
-import im.nfc.nfsee.nfc.Transaction
-import im.nfc.nfsee.nfc.TransactionType
+import im.nfc.nfsee.models.Transaction
 
 import kotlinx.android.synthetic.main.fragment_tranactions.view.*
-import org.joda.time.LocalDateTime
 
 class CardTransactionFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

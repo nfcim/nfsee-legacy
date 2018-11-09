@@ -8,6 +8,7 @@ import android.nfc.Tag
 import android.nfc.tech.*
 import com.vicpin.krealmextensions.querySorted
 import im.nfc.nfsee.models.Card
+import im.nfc.nfsee.models.CardData
 import im.nfc.nfsee.models.CardType
 import io.realm.Sort
 import org.jetbrains.anko.AnkoLogger

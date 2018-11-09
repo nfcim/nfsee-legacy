@@ -10,7 +10,7 @@ import im.nfc.nfsee.adapters.FragmentPagerAdapter
 import im.nfc.nfsee.fragments.CardDetailFragment
 import im.nfc.nfsee.fragments.CardLogFragment
 import im.nfc.nfsee.fragments.CardTransactionFragment
-import im.nfc.nfsee.nfc.CardData
+import im.nfc.nfsee.models.CardData
 import kotlinx.android.synthetic.main.activity_card_info.*
 
 class CardInfoActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {

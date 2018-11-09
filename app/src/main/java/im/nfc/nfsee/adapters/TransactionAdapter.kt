@@ -6,9 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import im.nfc.nfsee.R
-import im.nfc.nfsee.models.CardType
-import im.nfc.nfsee.nfc.Transaction
-import im.nfc.nfsee.nfc.TransactionType
+import im.nfc.nfsee.models.Transaction
+import im.nfc.nfsee.models.TransactionType
 import im.nfc.nfsee.utils.DatetimeUtils.toLongDate
 import im.nfc.nfsee.utils.DatetimeUtils.toLongTime
 import kotlinx.android.synthetic.main.transaction_item.view.*
