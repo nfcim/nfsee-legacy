@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import im.nfc.nfsee.R
 import im.nfc.nfsee.adapters.TransactionAdapter
+import im.nfc.nfsee.models.CardType
 import im.nfc.nfsee.nfc.Transaction
 import im.nfc.nfsee.nfc.TransactionType
 

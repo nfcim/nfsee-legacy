@@ -6,21 +6,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import im.nfc.nfsee.R
+import im.nfc.nfsee.models.CardType
 import im.nfc.nfsee.nfc.Transaction
 import im.nfc.nfsee.nfc.TransactionType
 import im.nfc.nfsee.utils.DatetimeUtils.toLongDate
 import im.nfc.nfsee.utils.DatetimeUtils.toLongTime
 import kotlinx.android.synthetic.main.transaction_item.view.*
 
-class TransactionAdapter(private val items: List<Transaction>, context: Context) : RecyclerView.Adapter<TransactionAdapter.ViewHolder>() {
+class TransactionAdapter(private val items: List<Transaction>, context: Context)
+    : RecyclerView.Adapter<TransactionAdapter.ViewHolder>() {
 
     private val expanded = MutableList(items.size) { false }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.transaction_item, parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(LayoutInflater
+            .from(parent.context).inflate(R.layout.transaction_item, parent, false))
 
     override fun getItemCount() = items.size
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(items[position], position)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int)
+            = holder.bind(items[position], position)
 
     private fun getTransactionTypeString(type: TransactionType) = when (type) {
         // TODO use context.getText() later
@@ -36,13 +40,13 @@ class TransactionAdapter(private val items: List<Transaction>, context: Context)
                 when (visibility) {
                     false -> {
                         transaction_detail.visibility = View.GONE
-                        transaction_indicator.
-                                setImageResource(R.drawable.ic_keyboard_arrow_down_black_24dp)
+                        transaction_indicator.setImageResource(
+                                R.drawable.ic_keyboard_arrow_down_black_24dp)
                     }
                     true -> {
                         transaction_detail.visibility = View.VISIBLE
-                        transaction_indicator.
-                                setImageResource(R.drawable.ic_keyboard_arrow_up_black_24dp)
+                        transaction_indicator.setImageResource(
+                                R.drawable.ic_keyboard_arrow_up_black_24dp)
                     }
                 }
             }
@@ -55,8 +59,18 @@ class TransactionAdapter(private val items: List<Transaction>, context: Context)
             transaction_time.text = item.datetime.toLongTime()
             transaction_location.text = item.terminalId
             transaction_symbol.text = item.currency
-            transaction_price.text = String.format("%d.%02d", item.amount / 100, item.amount % 100)
+
+            val sign = when (item.type) {
+                TransactionType.Load -> "+"
+                TransactionType.Purchase -> "-"
+                else -> ""
+            }
+            transaction_price.text = String.format("%s %d.%02d", sign,
+                    item.amount / 100, item.amount % 100)
+
             transaction_type.text = getTransactionTypeString(item.type)
+            transaction_extra.text = item.extra
+
         }
     }
 }

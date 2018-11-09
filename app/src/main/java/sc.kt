@@ -1,4 +1,5 @@
 import android.nfc.tech.IsoDep
+import im.nfc.nfsee.models.CardType
 import im.nfc.nfsee.nfc.Transaction
 import im.nfc.nfsee.nfc.TransceiveLog
 import im.nfc.nfsee.utils.ByteUtils.hexToBytes
@@ -15,25 +16,26 @@ import java.nio.charset.Charset
 class sc : TwoArgFunction() {
     companion object {
         var card: IsoDep? = null
-        var type: String? = null
+        var techType: String? = null
         val transactions = mutableListOf<Transaction>()
         val transceiveLogs = mutableListOf<TransceiveLog>()
+        var nowType: CardType? = null
     }
 
     override fun call(modname: LuaValue, env: LuaValue): LuaValue {
         val library = LuaValue.tableOf()
         library.set("des", des())
         library.set("tdes", tdes())
-        library.set("pbocenc", pbocenc())
-        library.set("pbocderive", pbocderive())
-        library.set("pbocmac", pbocmac())
+        library.set("pboc_enc", pboc_enc())
+        library.set("pboc_derive", pboc_derive())
+        library.set("pboc_mac", pboc_mac())
         library.set("transceive", transceive())
-        library.set("isok", isok())
-        library.set("hextoint", hextoint())
-        library.set("parsegbk", parsegbk())
-        library.set("parseutf8", parseutf8())
-        library.set("cardtype", cardtype())
-        library.set("addeptrans", addeptrans())
+        library.set("is_ok", is_ok())
+        library.set("hex_to_int", hex_to_int())
+        library.set("parse_gbk", parse_gbk())
+        library.set("parse_utf8", parse_utf8())
+        library.set("tech_type", tech_type())
+        library.set("add_ep_trans", add_ep_trans())
         env.set("sc", library)
         env.get("package").get("loaded").set("sc", library)
         return library
@@ -89,7 +91,7 @@ class sc : TwoArgFunction() {
         }
     }
 
-    class pbocenc : TwoArgFunction() {
+    class pboc_enc : TwoArgFunction() {
         override fun call(key: LuaValue, data: LuaValue): LuaValue {
             return try {
                 val keyByteArray = key.checkjstring().hexToBytes()
@@ -102,7 +104,7 @@ class sc : TwoArgFunction() {
         }
     }
 
-    class pbocderive : TwoArgFunction() {
+    class pboc_derive : TwoArgFunction() {
         override fun call(key: LuaValue, data: LuaValue): LuaValue {
             return try {
                 val keyByteArray = key.checkjstring().hexToBytes()
@@ -115,7 +117,7 @@ class sc : TwoArgFunction() {
         }
     }
 
-    class pbocmac : ThreeArgFunction() {
+    class pboc_mac : ThreeArgFunction() {
         override fun call(key: LuaValue, iv: LuaValue, data: LuaValue): LuaValue {
             return try {
                 val keyByteArray = key.checkjstring().hexToBytes()
@@ -142,7 +144,7 @@ class sc : TwoArgFunction() {
         }
     }
 
-    class isok : OneArgFunction() {
+    class is_ok : OneArgFunction() {
         override fun call(arg: LuaValue): LuaValue {
             return try {
                 LuaValue.valueOf(arg.checkjstring().endsWith("9000"))
@@ -152,7 +154,7 @@ class sc : TwoArgFunction() {
         }
     }
 
-    class hextoint : OneArgFunction() {
+    class hex_to_int : OneArgFunction() {
         override fun call(arg: LuaValue): LuaValue {
             return try {
                 LuaValue.valueOf(arg.checkjstring().toInt(16))
@@ -162,7 +164,7 @@ class sc : TwoArgFunction() {
         }
     }
 
-    class parsegbk : OneArgFunction() {
+    class parse_gbk : OneArgFunction() {
         override fun call(arg: LuaValue): LuaValue {
             return try {
                 val rawBytes = arg.checkjstring().hexToBytes()
@@ -173,7 +175,7 @@ class sc : TwoArgFunction() {
         }
     }
 
-    class parseutf8 : OneArgFunction() {
+    class parse_utf8 : OneArgFunction() {
         override fun call(arg: LuaValue): LuaValue {
             return try {
                 val rawBytes = arg.checkjstring().hexToBytes()
@@ -184,13 +186,14 @@ class sc : TwoArgFunction() {
         }
     }
 
-    class cardtype : ZeroArgFunction() {
+    class tech_type : ZeroArgFunction() {
         override fun call(): LuaValue {
-            return LuaValue.valueOf(type)
+            return LuaValue.valueOf(techType)
         }
     }
 
-    class addeptrans: OneArgFunction() {
+
+    class add_ep_trans: OneArgFunction() {
         override fun call(arg: LuaValue): LuaValue {
             try {
                 val hexString = arg.checkjstring()

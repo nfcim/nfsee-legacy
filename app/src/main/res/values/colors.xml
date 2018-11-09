@@ -6,4 +6,6 @@
     <color name="material_black_color">#ff616161</color>
     <color name="log_send">#ff8bc34a</color>
     <color name="log_receive">#ff039be5</color>
+    <color name="transaction_load">@color/colorAccent</color>
+    <color name="transaction_purchase">@android:color/primary_text_light</color>
 </resources>

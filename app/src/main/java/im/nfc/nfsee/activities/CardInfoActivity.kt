@@ -33,7 +33,8 @@ class CardInfoActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbar.setNavigationOnClickListener { finish() }
         initFragments()
-        info_viewpager.adapter = FragmentPagerAdapter(fragments, listOf("详细信息", "交易记录", "日志"), supportFragmentManager)
+        info_viewpager.adapter = FragmentPagerAdapter(fragments,
+                listOf("详细信息", "交易记录", "日志"), supportFragmentManager)
         info_tabLayout.setupWithViewPager(info_viewpager)
         info_tabLayout.addOnTabSelectedListener(this)
     }
@@ -42,7 +43,8 @@ class CardInfoActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
         val card = intent.extras!!["data"] as CardData
 
         val detailFragment = CardDetailFragment()
-        detailFragment.arguments = bundleOf("title" to card.title, "table" to card.table)
+        detailFragment.arguments = bundleOf(
+                "title" to card.title, "table" to card.table, "imageId" to card.imageId)
         fragments.add(detailFragment)
 
         val transactionFragment = CardTransactionFragment()

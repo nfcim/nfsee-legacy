@@ -7,7 +7,8 @@ import android.nfc.NfcAdapter
 import android.nfc.Tag
 import android.nfc.tech.*
 import com.vicpin.krealmextensions.querySorted
-import im.nfc.nfsee.models.Script
+import im.nfc.nfsee.models.Card
+import im.nfc.nfsee.models.CardType
 import io.realm.Sort
 import org.jetbrains.anko.AnkoLogger
 import sc
@@ -42,18 +43,19 @@ class NfcManager(private val act: Activity) : AnkoLogger {
         if (tag.techList.contains(IsoDep::class.java.name)) {
             val card = IsoDep.get(tag)
             sc.card = card
-            sc.type = when {
+            sc.techType = when {
                 tag.techList.contains(NfcA::class.java.name) -> "A"
                 tag.techList.contains(NfcB::class.java.name) -> "B"
                 else -> "Unknown"
             }
-            Script().querySorted("priority", Sort.ASCENDING).forEach { s ->
+            Card().querySorted("priority", Sort.ASCENDING).forEach { s ->
                 sc.transactions.clear()
                 sc.transceiveLogs.clear()
+                sc.nowType = CardType.valueOf(s.cardType)
                 if (card.isConnected)
                     card.close()
                 card.connect()
-                val ret = LuaExecutor.execute(s.content)
+                val ret = LuaExecutor.execute(s.script)
                 if (ret.isnil()) {
                     card.close()
                     return@forEach
@@ -63,7 +65,9 @@ class NfcManager(private val act: Activity) : AnkoLogger {
                     val item = retTable[idx].checktable()
                     Pair(item[1].checkjstring(), item[2].checkjstring())
                 }
-                val data = CardData(s.title, dataTable, sc.transactions, sc.transceiveLogs)
+
+                val data = CardData(s.title, dataTable, sc.transactions,
+                        sc.transceiveLogs, s.imageId)
                 card.close()
                 return data
             }

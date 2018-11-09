@@ -5,7 +5,7 @@
     <string name="card_nfc_guide">请将卡片紧贴手机背面</string>
     <string name="card_nfc_disable_guide">NFC已关闭，请在系统设置中打开</string>
     <string name="card_nfc_not_supported_guide">您的设备不支持NFC</string>
-    <string name="card_representation_title">卡组织</string>
+    <string name="card_type">卡类型</string>
     <string name="card_name_title">卡别名</string>
     <string name="transaction_empty">本卡无法提供交易历史</string>
     <string name="transaction_type">交易类型</string>

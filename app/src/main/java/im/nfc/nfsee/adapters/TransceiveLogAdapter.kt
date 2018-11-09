@@ -9,15 +9,18 @@ import im.nfc.nfsee.R
 import im.nfc.nfsee.nfc.TransceiveLog
 import kotlinx.android.synthetic.main.log_item.view.*
 
-class TransceiveLogAdapter(private val items: List<TransceiveLog>) : RecyclerView.Adapter<TransceiveLogAdapter.ViewHolder>() {
+class TransceiveLogAdapter(private val items: List<TransceiveLog>)
+    : RecyclerView.Adapter<TransceiveLogAdapter.ViewHolder>() {
 
     private val expanded = MutableList(items.size) { false }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.log_item, parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(LayoutInflater
+            .from(parent.context).inflate(R.layout.log_item, parent, false))
 
     override fun getItemCount() = items.size
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(items[position], position)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int)
+            = holder.bind(items[position], position)
 
     inner class ViewHolder(view: View) : ExpandableViewHolder(view, expanded) {
 
@@ -37,8 +40,8 @@ class TransceiveLogAdapter(private val items: List<TransceiveLog>) : RecyclerVie
         fun bind(item: TransceiveLog, position: Int) = with(view) {
             super.bind(position)
             tag = position
-            log_send.text = item.sendBytes
-            log_receive.text = item.receiveBytes
+            log_send.text = item.sendBytes.chunked(2).joinToString(" ")
+            log_receive.text = item.receiveBytes.chunked(2).joinToString(" ")
             log_detail.text = item.detail
             setDetailVisibility(view, expanded[position])
         }
