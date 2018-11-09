@@ -11,7 +11,7 @@ data class TransceiveLog(
     companion object {
         // TODO parse receiveBytes to explanation
         private fun parseBytes(sendBytes: String, receiveBytes: String): String {
-            return "$sendBytes - unexplained\n$receiveBytes - unexplained"
+            return "Explanation of APDU not yet implemented."
         }
     }
 }
