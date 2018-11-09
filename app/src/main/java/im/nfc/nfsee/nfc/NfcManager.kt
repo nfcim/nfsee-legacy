@@ -49,6 +49,7 @@ class NfcManager(private val act: Activity) : AnkoLogger {
             }
             Script().querySorted("priority", Sort.ASCENDING).forEach { s ->
                 sc.transactions.clear()
+                sc.transceiveLogs.clear()
                 if (card.isConnected)
                     card.close()
                 card.connect()
@@ -62,7 +63,7 @@ class NfcManager(private val act: Activity) : AnkoLogger {
                     val item = retTable[idx].checktable()
                     Pair(item[1].checkjstring(), item[2].checkjstring())
                 }
-                val data = CardData(s.title, dataTable, sc.transactions)
+                val data = CardData(s.title, dataTable, sc.transactions, sc.transceiveLogs)
                 card.close()
                 return data
             }

@@ -1,5 +1,6 @@
 import android.nfc.tech.IsoDep
 import im.nfc.nfsee.nfc.Transaction
+import im.nfc.nfsee.nfc.TransceiveLog
 import im.nfc.nfsee.utils.ByteUtils.hexToBytes
 import im.nfc.nfsee.utils.ByteUtils.toHexString
 import im.nfc.nfsee.utils.Crypto
@@ -16,6 +17,7 @@ class sc : TwoArgFunction() {
         var card: IsoDep? = null
         var type: String? = null
         val transactions = mutableListOf<Transaction>()
+        val transceiveLogs = mutableListOf<TransceiveLog>()
     }
 
     override fun call(modname: LuaValue, env: LuaValue): LuaValue {
@@ -132,8 +134,7 @@ class sc : TwoArgFunction() {
             return try {
                 val cmd = capdu.checkjstring()
                 val resp = sc.card?.transceive(cmd.hexToBytes())!!.toHexString()
-                println(cmd)
-                println(resp)
+                transceiveLogs.add(TransceiveLog(cmd, resp))
                 LuaValue.valueOf(resp)
             } catch (ex: Exception) {
                 LuaValue.NIL

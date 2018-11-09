@@ -49,6 +49,8 @@ class CardInfoActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
         transactionFragment.arguments = bundleOf("transactions" to card.transactions)
         fragments.add(transactionFragment)
 
-        fragments.add(CardLogFragment())
+        val cardLogFragment = CardLogFragment()
+        cardLogFragment.arguments = bundleOf("logs" to card.transceiveLogs)
+        fragments.add(cardLogFragment)
     }
 }

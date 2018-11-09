@@ -32,6 +32,9 @@ class L4Module {
                         end
                         rapdu = sc.transceive('00B0940000')
                         last_bus = tostring(sc.hextoint(string.sub(rapdu, 17, 20)))
+                        rapdu = sc.transceive('00B0950000')
+                        last_metro_in = tostring(sc.hextoint(string.sub(rapdu, 11, 12)))
+                        last_metro_out = tostring(sc.hextoint(string.sub(rapdu, 41, 42)))
                         return {
                           [1] = {'卡号', number},
                           [2] = {'余额', balance},
@@ -39,7 +42,8 @@ class L4Module {
                           [4] = {'失效日期', expire_date},
                           [5] = {'透支金额', overdraw},
                           [6] = {'累计交易次数', total_atc},
-                          [7] = {'最近乘坐公交线路', last_bus}
+                          [7] = {'最近乘坐公交线路', last_bus},
+                          [8] = {'最近乘坐地铁', last_metro_in..'号线 - '..last_metro_out..'号线'}
                         }
                     """.trimIndent()),
                     Script("清华大学校园卡", 1, """
