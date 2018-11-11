@@ -28,7 +28,8 @@ class sc : TwoArgFunction() {
         library.set("tdes", tdes())
         library.set("pboc_enc", pboc_enc())
         library.set("pboc_derive", pboc_derive())
-        library.set("pboc_mac", pboc_mac())
+        library.set("pboc_des_mac", pboc_des_mac())
+        library.set("pboc_3des_mac", pboc_3des_mac())
         library.set("transceive", transceive())
         library.set("is_ok", is_ok())
         library.set("hex_to_int", hex_to_int())
@@ -117,7 +118,21 @@ class sc : TwoArgFunction() {
         }
     }
 
-    class pboc_mac : ThreeArgFunction() {
+    class pboc_des_mac : ThreeArgFunction() {
+        override fun call(key: LuaValue, iv: LuaValue, data: LuaValue): LuaValue {
+            return try {
+                val keyByteArray = key.checkjstring().hexToBytes()
+                val ivByteArray = iv.checkjstring().hexToBytes()
+                val dataByteArray = data.checkjstring().hexToBytes()
+                val ret = Crypto.pbocDesMac(keyByteArray, ivByteArray, dataByteArray)
+                LuaValue.valueOf(ret.toHexString())
+            } catch (ex: Exception) {
+                LuaValue.NIL
+            }
+        }
+    }
+
+    class pboc_3des_mac : ThreeArgFunction() {
         override fun call(key: LuaValue, iv: LuaValue, data: LuaValue): LuaValue {
             return try {
                 val keyByteArray = key.checkjstring().hexToBytes()

@@ -17,7 +17,10 @@ open class Card(
 enum class CardType {
     BMAC,
     THUCARD,
-    CITY_UNION
+    CITY_UNION,
+    SHENZHENTONG,
+    UP_CREDIT,
+    UP_DEBIT
 }
 
 
@@ -104,7 +107,6 @@ class L4Module {
                         number = string.sub(rapdu, 25, 40)
                         issue_date = string.sub(rapdu, 41, 48)
                         expire_date = string.sub(rapdu, 49, 56)
-                        rapdu = sc.transceive('00B0850000')
                         rapdu = sc.transceive('805C000204')
                         balance = tostring(sc.hex_to_int(string.sub(rapdu, 1, 8)) / 100)..'元'
                         for i = 1, 10 do
@@ -118,7 +120,57 @@ class L4Module {
                           [3] = {'发卡日期', issue_date},
                           [4] = {'失效日期', expire_date}
                         }
-                    """.trimIndent(), R.drawable.card_bmac, CardType.CITY_UNION.name)
+                    """.trimIndent(), 0, CardType.CITY_UNION.name),
+                    Card("深圳通", 3, """
+                        require 'sc'
+                        rapdu = sc.transceive('00A40000021001')
+                        if not sc.is_ok(rapdu) then return nil end
+                        rapdu = sc.transceive('00B0950000')
+                        number = tostring(sc.hex_to_int(string.sub(rapdu, 33, 40)))
+                        issue_date = string.sub(rapdu, 41, 48)
+                        expire_date = string.sub(rapdu, 49, 56)
+                        rapdu = sc.transceive('805C000204')
+                        balance = tostring(sc.hex_to_int(string.sub(rapdu, 1, 8)) / 100)..'元'
+                        for i = 1, 10 do
+                            rapdu = sc.transceive('00B20'..string.upper(string.format('%x', i))..'C400')
+                            if not sc.is_ok(rapdu) then break end
+                            sc.add_ep_trans(rapdu)
+                        end
+                        return {
+                          [1] = {'卡号', number},
+                          [2] = {'余额', balance},
+                          [3] = {'发卡日期', issue_date},
+                          [4] = {'失效日期', expire_date}
+                        }
+                    """.trimIndent(), 0, CardType.SHENZHENTONG.name),
+                    Card("银联信用卡", 4, """
+                        require 'sc'
+                        rapdu = sc.transceive('00A4040008A000000333010102')
+                        if not sc.is_ok(rapdu) then return nil end
+                        rapdu = sc.transceive('00B2010C00')
+                        if not sc.is_ok(rapdu) then return nil end
+                        s, t = string.find(rapdu, '57') -- find track 2
+                        if t == nil then return nil end
+                        s, _ = string.find(rapdu, 'D', s) -- find card number margin
+                        number = string.sub(rapdu, t + 3, s - 1)
+                        return {
+                          [1] = {'卡号', number}
+                        }
+                    """.trimIndent(), R.drawable.card_unionpay_credit, CardType.UP_CREDIT.name),
+                    Card("银联借记卡", 4, """
+                        require 'sc'
+                        rapdu = sc.transceive('00A4040008A000000333010101')
+                        if not sc.is_ok(rapdu) then return nil end
+                        rapdu = sc.transceive('00B2010C00')
+                        if not sc.is_ok(rapdu) then return nil end
+                        s, t = string.find(rapdu, '57') -- find track 2
+                        if t == nil then return nil end
+                        s, _ = string.find(rapdu, 'D', s) -- find card number margin
+                        number = string.sub(rapdu, t + 3, s - 1)
+                        return {
+                          [1] = {'卡号', number}
+                        }
+                    """.trimIndent(), R.drawable.card_unionpay_debit, CardType.UP_DEBIT.name)
             ).saveAll()
         }
     }
