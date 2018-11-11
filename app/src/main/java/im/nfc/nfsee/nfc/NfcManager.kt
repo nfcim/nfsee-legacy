@@ -12,7 +12,9 @@ import im.nfc.nfsee.models.CardData
 import im.nfc.nfsee.models.CardType
 import io.realm.Sort
 import org.jetbrains.anko.AnkoLogger
+import org.luaj.vm2.LuaValue
 import sc
+import java.lang.Exception
 
 
 class NfcManager(private val act: Activity) : AnkoLogger {
@@ -51,7 +53,11 @@ class NfcManager(private val act: Activity) : AnkoLogger {
             }
             sc.output = ""
             card.connect()
-            LuaExecutor.execute(script)
+            try {
+                LuaExecutor.execute(script)
+            } catch (ex: Exception) {
+                ex.printStackTrace()
+            }
             card.close()
             return sc.output
         }
@@ -74,7 +80,13 @@ class NfcManager(private val act: Activity) : AnkoLogger {
                 if (card.isConnected)
                     card.close()
                 card.connect()
-                val ret = LuaExecutor.execute(s.script)
+                val ret: LuaValue
+                try {
+                    ret = LuaExecutor.execute(s.script)
+                } catch (ex: Exception) {
+                    card.close()
+                    return@forEach
+                }
                 if (ret.isnil()) {
                     card.close()
                     return@forEach
