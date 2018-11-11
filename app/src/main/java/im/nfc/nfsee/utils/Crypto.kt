@@ -48,14 +48,14 @@ object Crypto {
     }
 
     fun pbocDesMac(key: ByteArray, iv: ByteArray, data: ByteArray): ByteArray {
-        if (key.size != 16) throw Exception("Invalid key size")
+        if (key.size != 8) throw Exception("Invalid key size")
         val cipher = Cipher.getInstance("DES/ECB/NoPadding")
-        cipher.init(Cipher.ENCRYPT_MODE, SecretKeySpec(key.take(8).toByteArray(), "DES"))
+        cipher.init(Cipher.ENCRYPT_MODE, SecretKeySpec(key, "DES"))
         val paddedData = data.plus(0x80.toByte()).plus(ByteArray(7 - data.size % 8))
         val groups = paddedData.toList().chunked(8)
         val firstChunk = groups.first().toByteArray()
         val o = groups.drop(1).fold(xor(iv, firstChunk)) { acc, item -> xor(item.toByteArray(), cipher.doFinal(acc)) }
-        return o.take(4).toByteArray()
+        return desECB(key, o, DesMode.Encrypt).take(4).toByteArray()
     }
 
     fun pbocTdesMac(key: ByteArray, iv: ByteArray, data: ByteArray): ByteArray {
