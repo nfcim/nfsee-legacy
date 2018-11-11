@@ -10,10 +10,13 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import im.nfc.nfsee.R
+import im.nfc.nfsee.models.Card
+import im.nfc.nfsee.models.CardData
 import im.nfc.nfsee.nfc.NfcManager
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import org.jetbrains.anko.startActivity
+import java.lang.Exception
 
 class MainActivity : AppCompatActivity() {
 
@@ -56,8 +59,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onNewIntent(intent: Intent) {
         val tag = intent.getParcelableExtra<Tag>(NfcAdapter.EXTRA_TAG)
-        val cardData = nfc.readCard(tag)
-        Toast.makeText(this, "读到卡了！", Toast.LENGTH_SHORT).show()
+        val cardData: CardData?
+        try {
+            cardData = nfc.readCard(tag)
+        } catch (ex: Exception) {
+            Toast.makeText(this, "读卡异常，请重试", Toast.LENGTH_SHORT).show()
+            return
+        }
         if (cardData != null) {
             startActivity<CardInfoActivity>("data" to cardData)
         }
