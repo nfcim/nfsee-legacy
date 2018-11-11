@@ -20,6 +20,7 @@ class sc : TwoArgFunction() {
         val transactions = mutableListOf<Transaction>()
         val transceiveLogs = mutableListOf<TransceiveLog>()
         var nowType: CardType? = null
+        var output: String = ""
     }
 
     override fun call(modname: LuaValue, env: LuaValue): LuaValue {
@@ -37,6 +38,12 @@ class sc : TwoArgFunction() {
         library.set("parse_utf8", parse_utf8())
         library.set("tech_type", tech_type())
         library.set("add_ep_trans", add_ep_trans())
+        library.set("print", object: OneArgFunction() {
+            override fun call(arg: LuaValue): LuaValue {
+                output += arg.checkjstring() + "\n"
+                return LuaValue.NIL
+            }
+        })
         env.set("sc", library)
         env.get("package").get("loaded").set("sc", library)
         return library

@@ -29,6 +29,8 @@
         </activity>
         <activity android:name=".activities.CardInfoActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activities.ScriptActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
