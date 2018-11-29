@@ -14,6 +14,11 @@
     <string name="transaction_extra">备注</string>
     <string name="fa_angle_down">&#xf107;</string>
     <string name="fa_angle_up">&#xf106;</string>
+    <string name="execute">执行</string>
+    <string name="save">保存</string>
+    <string name="execution_result">返回结果</string>
+    <string name="hint_script_content">Lua 脚本，请查阅文档后编写</string>
+    <string name="hint_script_param">脚本参数，使用逗号分隔，可留空</string>
 
 
 </resources>
