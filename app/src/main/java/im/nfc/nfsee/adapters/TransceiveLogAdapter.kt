@@ -43,7 +43,7 @@ class TransceiveLogAdapter(private val items: List<TransceiveLog>)
             log_send.text = item.sendBytes.chunked(2).joinToString(" ")
             log_receive.text = item.receiveBytes.chunked(2).joinToString(" ")
             log_detail.text = item.detail
-            setDetailVisibility(view, expanded[position])
+            setDetailVisibility(view, expanded!![position])
         }
     }
 }

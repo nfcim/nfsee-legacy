@@ -6,10 +6,12 @@ import android.nfc.Tag
 import android.os.Bundle
 import android.widget.TextView
 import android.widget.Toast
-import im.nfc.nfsee.fragments.ScriptExecutionFragment
+import im.nfc.nfsee.fragments.UserScriptExecutionFragment
+import im.nfc.nfsee.fragments.UserScriptListFragment
 import im.nfc.nfsee.nfc.NfcManager
+import kotlinx.android.synthetic.main.activity_viewpager.*
 
-class ScriptActivity: ViewPagerActivity(
+class UserScriptActivity: ViewPagerActivity(
         "脚本工具",
         listOf("运行脚本", "脚本列表")
 ) {
@@ -25,12 +27,19 @@ class ScriptActivity: ViewPagerActivity(
     }
 
     fun updateScript(script: String) {
+        info_viewpager.currentItem = 0
         this.script = script
-        Toast.makeText(this@ScriptActivity, "请贴卡", Toast.LENGTH_SHORT).show()
+        (fragments[0] as UserScriptExecutionFragment).setScript(script)
+        Toast.makeText(this@UserScriptActivity, "请贴卡", Toast.LENGTH_SHORT).show()
+    }
+
+    fun notifyDataChanged() {
+        (fragments[1] as UserScriptListFragment).notifyDataChanged()
     }
 
     override fun initFragments() {
-        fragments.add(ScriptExecutionFragment())
+        fragments.add(UserScriptExecutionFragment())
+        fragments.add(UserScriptListFragment())
     }
 
     override fun onResume() {
@@ -46,7 +55,7 @@ class ScriptActivity: ViewPagerActivity(
     override fun onNewIntent(intent: Intent) {
         val tag = intent.getParcelableExtra<Tag>(NfcAdapter.EXTRA_TAG)
         val output = nfc.executeScript(tag, script)
-        (fragments[0] as ScriptExecutionFragment).setOutput(output)
+        (fragments[0] as UserScriptExecutionFragment).setOutput(output)
         Toast.makeText(this, "执行完毕！", Toast.LENGTH_SHORT).show()
     }
 }

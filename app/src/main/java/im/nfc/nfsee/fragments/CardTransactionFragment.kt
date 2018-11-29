@@ -14,10 +14,14 @@ import kotlinx.android.synthetic.main.fragment_tranactions.view.*
 
 class CardTransactionFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val transactions = arguments!!["transactions"] as List<Transaction>
+        val transactions = arguments!!["transactions"] as? List<Transaction>
         val transactionView = inflater.inflate(R.layout.fragment_tranactions, container, false)
-        transactionView.list_history.layoutManager = LinearLayoutManager(this.context)
-        transactionView.list_history.adapter = TransactionAdapter(transactions, this.context!!)
+        if (transactions == null) {
+            transactionView.list_history.visibility = View.GONE
+        } else {
+            transactionView.list_history.layoutManager = LinearLayoutManager(this.context)
+            transactionView.list_history.adapter = TransactionAdapter(transactions, this.context!!)
+        }
         return transactionView
     }
 }
