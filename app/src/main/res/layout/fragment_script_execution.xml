@@ -3,13 +3,13 @@
 
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginLeft="10.0dip"
     android:layout_marginTop="10.0dip"
     android:layout_marginRight="10.0dip"
-    card_view:cardCornerRadius="4.0dip">
+    card_view:cardCornerRadius="4.0dip"
+    card_view:contentPadding="10dip">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
