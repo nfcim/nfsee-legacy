@@ -14,9 +14,9 @@ import kotlinx.android.synthetic.main.fragment_tranactions.view.*
 
 class CardTransactionFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val transactions = arguments!!["transactions"] as? List<Transaction>
+        val transactions = arguments!!["transactions"] as List<Transaction>
         val transactionView = inflater.inflate(R.layout.fragment_tranactions, container, false)
-        if (transactions == null) {
+        if (transactions.isEmpty()) {
             transactionView.list_history.visibility = View.GONE
         } else {
             transactionView.list_history.layoutManager = LinearLayoutManager(this.context)

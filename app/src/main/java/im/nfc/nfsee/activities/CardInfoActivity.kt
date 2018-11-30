@@ -8,7 +8,7 @@ import im.nfc.nfsee.models.CardData
 
 class CardInfoActivity : ViewPagerActivity(
         "卡片详情",
-        listOf("详细信息", "交易记录", "日志")
+        listOf("详细信息", "交易记录", "传输日志")
 ) {
 
     override fun initFragments() {
