@@ -105,8 +105,12 @@ class UserScriptActivity: ViewPagerActivity(
 
                     }.show()
                 }
-
             }
+
+            R.id.menu_item_script_help -> {
+                toast("嘿嘿嘿，不告诉你")
+            }
+
             else -> {}
         }
         return true

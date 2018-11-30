@@ -3,6 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/menu_item_script_help"
+        android:icon="@drawable/ic_help_white_24dp"
+        android:title="@string/script_help"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/menu_item_execute"
         android:icon="@drawable/ic_play_arrow_white_24dp"
         android:title="@string/execute"
@@ -12,4 +18,5 @@
         android:icon="@drawable/ic_save_white_24dp"
         android:title="@string/save"
         app:showAsAction="ifRoom" />
+
 </menu>
