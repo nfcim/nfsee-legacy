@@ -32,76 +32,28 @@ class UserScriptExecutionFragment : Fragment() {
         executionView = inflater.inflate(R.layout.fragment_script_execution,
                 container, false)
 
-        with(executionView) {
-            button_execute.setOnClickListener {
-                val script = editText_script.text.toString()
-                val params = editText_param.text.split(',').toTypedArray()
-                try {
-                    val formattedScript = script.format(*params)
-                    (activity as UserScriptActivity).updateScript(formattedScript)
-                } catch (e: IllegalFormatException) {
-                    toast("设置脚本失败！请确认参数与脚本中一致")
-                }
-            }
-
-            button_save.setOnClickListener {
-                saveScript()
-            }
-        }
+        output = ""
 
         return executionView
     }
 
-    fun setOutput(output: String) {
-        executionView.text_result.text = output
+
+    var output: String
+    get() = ""
+    set(value) {
+        executionView.text_result.text = getText(R.string.execution_result).toString().format(value)
     }
 
-    fun setScript(script: String) {
+
+    var script: String
+    get() = executionView.editText_script.text.toString()
+    set(value) {
         executionView.editText_script.text.clear()
-        executionView.editText_script.text.insert(0, script)
+        executionView.editText_script.text.insert(0, value)
     }
 
 
-    private fun saveScript() {
+    var params: String = ""
+    get() = executionView.editText_param.text.toString()
 
-        alert {
-
-            lateinit var editTextName: EditText
-
-            title = "保存脚本"
-
-            customView {
-                linearLayout {
-                    padding = 10
-                    editText {
-                        hint = getText(R.string.need_valid_filename)
-                        inputType = InputType.TYPE_CLASS_TEXT
-                        editTextName = this
-                    }
-                }
-            }
-
-            yesButton {
-                // FIXME: not working
-                if (editTextName.text.toString().contains(Regex.fromLiteral("\\s"))) {
-                    toast("文件名不合法")
-                    return@yesButton
-                }
-                if (editText_script.text.isBlank()) {
-                    toast("脚本为空")
-                    return@yesButton
-                }
-
-                Realm.getDefaultInstance().transaction { realm ->
-                    val script = realm.createObject<UserScript>(DateTime.now().millis)
-                    script.title = editTextName.text.toString()
-                    script.script = executionView.editText_script.text.toString()
-                }
-                toast("保存成功")
-                (activity as UserScriptActivity).notifyDataChanged()
-                it.dismiss()
-            }
-
-        }.show()
-    }
 }
