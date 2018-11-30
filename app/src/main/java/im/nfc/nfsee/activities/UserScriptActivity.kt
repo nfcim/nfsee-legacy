@@ -111,7 +111,7 @@ class UserScriptActivity: ViewPagerActivity(
                 toast("嘿嘿嘿，不告诉你")
             }
 
-            else -> {}
+            else -> return super.onOptionsItemSelected(item)
         }
         return true
     }

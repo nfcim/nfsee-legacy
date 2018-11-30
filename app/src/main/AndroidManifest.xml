@@ -10,7 +10,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.NoActionBar"
+        android:theme="@style/AppTheme"
         android:name=".App">
         <activity
             android:name=".activities.MainActivity"
@@ -31,6 +31,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activities.UserScriptActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activities.AboutActivity" />
     </application>
 
 </manifest>

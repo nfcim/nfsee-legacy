@@ -22,6 +22,7 @@
     <string name="script_title">脚本名称</string>
     <string name="need_valid_filename">需要为合法文件名</string>
     <string name="script_help">脚本使用帮助</string>
+    <string name="about">关于 NFSee</string>
 
 
 </resources>
