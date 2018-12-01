@@ -155,8 +155,10 @@ class L4Module {
                         if t == nil then return nil end
                         s, _ = string.find(rapdu, 'D', s) -- find card number margin
                         number = string.sub(rapdu, t + 3, s - 1)
+                        exp = string.sub(rapdu, s + 1, s + 2)..'年'..string.sub(rapdu, s + 3, s + 4)..'月'
                         return {
-                          [1] = {'卡号', number}
+                          [1] = {'卡号', number},
+                          [2] = {'有效期', exp},
                         }
                     """.trimIndent(), R.drawable.card_unionpay_credit, CardType.UP_CREDIT.name),
                     Card("银联借记卡", 4, """
@@ -169,8 +171,10 @@ class L4Module {
                         if t == nil then return nil end
                         s, _ = string.find(rapdu, 'D', s) -- find card number margin
                         number = string.sub(rapdu, t + 3, s - 1)
+                        exp = string.sub(rapdu, s + 1, s + 2)..'年'..string.sub(rapdu, s + 3, s + 4)..'月'
                         return {
-                          [1] = {'卡号', number}
+                          [1] = {'卡号', number},
+                          [2] = {'有效期', exp},
                         }
                     """.trimIndent(), R.drawable.card_unionpay_debit, CardType.UP_DEBIT.name),
                     Card("VISA卡", 5, """
@@ -183,8 +187,10 @@ class L4Module {
                         if t == nil then return nil end
                         s, _ = string.find(rapdu, 'D', s) -- find card number margin
                         number = string.sub(rapdu, t + 3, s - 1)
+                        exp = string.sub(rapdu, s + 1, s + 2)..'年'..string.sub(rapdu, s + 3, s + 4)..'月'
                         return {
-                          [1] = {'卡号', number}
+                          [1] = {'卡号', number},
+                          [2] = {'有效期', exp},
                         }
                     """.trimIndent(), R.drawable.card_visa, CardType.VISA.name),
                     Card("MasterCard", 6, """
@@ -197,8 +203,10 @@ class L4Module {
                         if t == nil then return nil end
                         s, _ = string.find(rapdu, 'D', s) -- find card number margin
                         number = string.sub(rapdu, t + 3, s - 1)
+                        exp = string.sub(rapdu, s + 1, s + 2)..'年'..string.sub(rapdu, s + 3, s + 4)..'月'
                         return {
-                          [1] = {'卡号', number}
+                          [1] = {'卡号', number},
+                          [2] = {'有效期', exp},
                         }
                     """.trimIndent(), R.drawable.card_mc, CardType.MC.name)
             ).saveAll()
