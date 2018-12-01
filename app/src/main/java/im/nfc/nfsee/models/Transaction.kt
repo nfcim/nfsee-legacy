@@ -55,7 +55,7 @@ data class Transaction(var atc: Int,
             val terminalId = data.substring(20, 32)
             return when (sc.nowType!!) {
                 CardType.BMAC -> {
-                    if (terminalId.startsWith("0001"))
+                    if (terminalId.startsWith("0001") or terminalId.startsWith("001"))
                         "公交"
                     else if (!terminalId.startsWith("30"))
                         "未知"
