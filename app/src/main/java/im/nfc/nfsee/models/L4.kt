@@ -22,6 +22,7 @@ enum class CardType {
     UP_CREDIT,
     UP_DEBIT,
     VISA,
+    MC,
 }
 
 
@@ -185,7 +186,21 @@ class L4Module {
                         return {
                           [1] = {'卡号', number}
                         }
-                    """.trimIndent(), R.drawable.card_visa, CardType.VISA.name)
+                    """.trimIndent(), R.drawable.card_visa, CardType.VISA.name),
+                    Card("MasterCard", 6, """
+                        require 'sc'
+                        rapdu = sc.transceive('00A4040007A0000000041010')
+                        if not sc.is_ok(rapdu) then return nil end
+                        rapdu = sc.transceive('00B2010C00')
+                        if not sc.is_ok(rapdu) then return nil end
+                        s, t = string.find(rapdu, '57') -- find track 2
+                        if t == nil then return nil end
+                        s, _ = string.find(rapdu, 'D', s) -- find card number margin
+                        number = string.sub(rapdu, t + 3, s - 1)
+                        return {
+                          [1] = {'卡号', number}
+                        }
+                    """.trimIndent(), R.drawable.card_mc, CardType.MC.name)
             ).saveAll()
         }
     }
