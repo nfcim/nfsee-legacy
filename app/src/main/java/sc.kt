@@ -21,6 +21,7 @@ class sc : TwoArgFunction() {
         val transceiveLogs = mutableListOf<TransceiveLog>()
         var nowType: CardType? = null
         var output: String = ""
+        var arguments: String = ""
     }
 
     override fun call(modname: LuaValue, env: LuaValue): LuaValue {
@@ -216,6 +217,12 @@ class sc : TwoArgFunction() {
             override fun call(arg: LuaValue): LuaValue {
                 output += arg.checkjstring() + "\n"
                 return LuaValue.NIL
+            }
+        })
+
+        library.set("args", object : ZeroArgFunction() {
+            override fun call(): LuaValue {
+                return LuaValue.valueOf(arguments)
             }
         })
 

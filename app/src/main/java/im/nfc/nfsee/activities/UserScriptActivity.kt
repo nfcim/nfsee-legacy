@@ -30,6 +30,7 @@ class UserScriptActivity: ViewPagerActivity(
 ) {
 
     private var script = ""
+    private var params = ""
 
     private lateinit var nfc: NfcManager
 
@@ -51,9 +52,7 @@ class UserScriptActivity: ViewPagerActivity(
 
             R.id.menu_item_execute -> {
                 try {
-                    val params = executionFragment.params.split(',').toTypedArray()
-                    val formattedScript = executionFragment.script.format(*params)
-                    updateScript(formattedScript, false)
+                    updateScript(executionFragment.script, executionFragment.params, false)
                 } catch (e: IllegalFormatException) {
                     toast("设置脚本失败！请确认参数与脚本中一致")
                 }
@@ -117,10 +116,15 @@ class UserScriptActivity: ViewPagerActivity(
     }
 
 
-    fun updateScript(script: String, setToUI: Boolean=true) {
+    fun updateScript(script: String, params: String, setToUI: Boolean=true) {
         info_viewpager.currentItem = 0
         this.script = script
-        if (setToUI) (fragments[0] as UserScriptExecutionFragment).script = script
+        this.params = params
+        if (setToUI) {
+            val frag = (fragments[0] as UserScriptExecutionFragment)
+            frag.script = script
+            frag.params = params
+        }
         Toast.makeText(this@UserScriptActivity, "请贴卡", Toast.LENGTH_SHORT).show()
     }
 
@@ -142,7 +146,7 @@ class UserScriptActivity: ViewPagerActivity(
 
     override fun onNewIntent(intent: Intent) {
         val tag = intent.getParcelableExtra<Tag>(NfcAdapter.EXTRA_TAG)
-        (fragments[0] as UserScriptExecutionFragment).output = nfc.executeScript(tag, script)
+        (fragments[0] as UserScriptExecutionFragment).output = nfc.executeScript(tag, script, params)
         Toast.makeText(this, "执行完毕！", Toast.LENGTH_SHORT).show()
     }
 }

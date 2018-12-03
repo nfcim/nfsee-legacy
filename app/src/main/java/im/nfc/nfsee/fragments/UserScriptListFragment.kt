@@ -42,7 +42,7 @@ class UserScriptListFragment : Fragment() {
         scriptView = inflater.inflate(R.layout.fragment_list, container, false)
         scriptView.list.layoutManager = LinearLayoutManager(this.context)
         scriptView.list.adapter = UserScriptAdapter(scripts, { id ->
-            (activity as UserScriptActivity).updateScript(scripts[id].script)
+            (activity as UserScriptActivity).updateScript(scripts[id].script, "")
         }, { id ->
             alert("该操作不可恢复，确定吗？", "删除脚本") {
                 yesButton {

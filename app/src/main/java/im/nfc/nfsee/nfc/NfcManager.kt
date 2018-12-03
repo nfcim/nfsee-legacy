@@ -42,9 +42,10 @@ class NfcManager(private val act: Activity) : AnkoLogger {
 
     fun isEnabled() = nfcAdapter!!.isEnabled
 
-    fun executeScript(tag: Tag, script: String): String {
+    fun executeScript(tag: Tag, script: String, params: String): String {
         if (tag.techList.contains(IsoDep::class.java.name)) {
             val card = IsoDep.get(tag)
+            sc.arguments = params
             sc.card = card
             sc.techType = when {
                 tag.techList.contains(NfcA::class.java.name) -> "A"

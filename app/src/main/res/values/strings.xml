@@ -18,7 +18,7 @@
     <string name="save">保存</string>
     <string name="execution_result">返回结果：%s</string>
     <string name="hint_script_content">Lua 脚本，请查阅文档后编写</string>
-    <string name="hint_script_param">脚本参数，使用逗号分隔，可留空</string>
+    <string name="hint_script_param">脚本参数，可留空</string>
     <string name="script_title">脚本名称</string>
     <string name="need_valid_filename">需要为合法文件名</string>
     <string name="script_help">脚本使用帮助</string>

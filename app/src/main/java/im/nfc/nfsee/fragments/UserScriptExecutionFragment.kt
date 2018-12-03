@@ -53,7 +53,11 @@ class UserScriptExecutionFragment : Fragment() {
     }
 
 
-    var params: String = ""
+    var params: String
     get() = executionView.editText_param.text.toString()
+    set(value) {
+        executionView.editText_param.text.clear()
+        executionView.editText_param.text.insert(0, value)
+    }
 
 }
