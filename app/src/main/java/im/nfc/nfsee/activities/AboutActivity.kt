@@ -20,16 +20,14 @@ class AboutActivity : AppCompatActivity() {
         setTitle(R.string.about)
 
         val version = Element().apply {
-            title = "Version ${BuildConfig.VERSION_NAME}(${BuildConfig.VERSION_CODE})"
+            title = "Version ${BuildConfig.VERSION_NAME}"
         }
 
         setContentView(with(AboutPage(this)) {
             isRTL(false)
-            setImage(R.drawable.ic_launcher_background)
+            setImage(R.mipmap.ic_launcher)
             setDescription("NFSee can do anything you want!")
             addItem(version)
-            addEmail("nfsee@nfsee.im")
-            addWebsite("https://nfsee.nfc.im")
             create()
         })
     }
