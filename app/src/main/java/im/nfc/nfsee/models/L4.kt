@@ -161,7 +161,23 @@ class L4Module {
                           [2] = {'有效期', exp},
                         }
                     """.trimIndent(), R.drawable.card_unionpay_credit, CardType.UP_CREDIT.name),
-                    Card("银联借记卡", 4, """
+                    Card("银联准贷记卡", 5, """
+                        require 'sc'
+                        rapdu = sc.transceive('00A4040008A000000333010103')
+                        if not sc.is_ok(rapdu) then return nil end
+                        rapdu = sc.transceive('00B2010C00')
+                        if not sc.is_ok(rapdu) then return nil end
+                        s, t = string.find(rapdu, '57') -- find track 2
+                        if t == nil then return nil end
+                        s, _ = string.find(rapdu, 'D', s) -- find card number margin
+                        number = string.sub(rapdu, t + 3, s - 1)
+                        exp = string.sub(rapdu, s + 1, s + 2)..'年'..string.sub(rapdu, s + 3, s + 4)..'月'
+                        return {
+                          [1] = {'卡号', number},
+                          [2] = {'有效期', exp},
+                        }
+                    """.trimIndent(), R.drawable.card_unionpay_credit, CardType.UP_CREDIT.name),
+                    Card("银联借记卡", 6, """
                         require 'sc'
                         rapdu = sc.transceive('00A4040008A000000333010101')
                         if not sc.is_ok(rapdu) then return nil end
@@ -177,7 +193,7 @@ class L4Module {
                           [2] = {'有效期', exp},
                         }
                     """.trimIndent(), R.drawable.card_unionpay_debit, CardType.UP_DEBIT.name),
-                    Card("VISA卡", 5, """
+                    Card("VISA卡", 7, """
                         require 'sc'
                         rapdu = sc.transceive('00A4040007A0000000031010')
                         if not sc.is_ok(rapdu) then return nil end
@@ -193,7 +209,7 @@ class L4Module {
                           [2] = {'有效期', exp},
                         }
                     """.trimIndent(), R.drawable.card_visa, CardType.VISA.name),
-                    Card("MasterCard", 6, """
+                    Card("MasterCard", 8, """
                         require 'sc'
                         rapdu = sc.transceive('00A4040007A0000000041010')
                         if not sc.is_ok(rapdu) then return nil end
