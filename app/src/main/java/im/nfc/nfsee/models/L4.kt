@@ -105,6 +105,13 @@ class L4Module {
                         require 'sc'
                         rapdu = sc.transceive('00A4040009A00000000386980701')
                         if not sc.is_ok(rapdu) then return nil end
+                        rapdu = sc.transceive('805C000204')
+                        balance = sc.cent_to_yuan(sc.hex_to_dec(string.sub(rapdu, 1, 8)))..'元'
+                        for i = 1, 10 do
+                            rapdu = sc.transceive('00B20'..string.upper(string.format('%x', i))..'C400')
+                            if not sc.is_ok(rapdu) then break end
+                            sc.add_ep_trans(rapdu)
+                        end
                         rapdu = sc.transceive('00B0950000')
                         if string.sub(rapdu, 5, 8) == '4000' then
                             expire_date = string.sub(rapdu, 17, 24)
@@ -115,13 +122,6 @@ class L4Module {
                         end
                         number = string.sub(rapdu, 25, 40)
                         issue_date = string.sub(rapdu, 41, 48)
-                        rapdu = sc.transceive('805C000204')
-                        balance = sc.cent_to_yuan(sc.hex_to_dec(string.sub(rapdu, 1, 8)))..'元'
-                        for i = 1, 10 do
-                            rapdu = sc.transceive('00B20'..string.upper(string.format('%x', i))..'C400')
-                            if not sc.is_ok(rapdu) then break end
-                            sc.add_ep_trans(rapdu)
-                        end
                         return {
                           [1] = {'卡号', number},
                           [2] = {'余额', balance},
