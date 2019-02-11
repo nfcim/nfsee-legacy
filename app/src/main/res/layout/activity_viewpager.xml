@@ -17,7 +17,8 @@
             android:layout_height="@dimen/action_bar_height_material"
             android:background="@color/colorPrimary"
             android:minHeight="?actionBarSize"
-            android:theme="@style/Toolbar" />
+            android:theme="@style/Toolbar"
+            app:layout_scrollFlags="scroll|enterAlways"/>
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/info_tabLayout"

@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">NFSee</string>
+    <string name="app_name_debug">NFSee Snapshot</string>
     <string name="action_script">脚本模式</string>
     <string name="main_goto_settings">打开NFC设置</string>
     <string name="card_nfc_guide">请将卡片紧贴手机背面</string>
