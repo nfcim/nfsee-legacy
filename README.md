@@ -2,8 +2,6 @@
 
 **Note: Development of this repo is discontinued. It will be replaced with a new [flutter version](https://github.com/nfc.im/nfsee) that can run on both Android and iOS.**
 
-[![NFSee on Google Play](https://raw.githubusercontent.com/steverichey/google-play-badge-svg/master/img/en_get.svg)](https://play.google.com/store/apps/details?id=im.nfc.nfsee)
-
 NFSee is an Android application that can:
 
 * read various type of NFC tags / cards,
