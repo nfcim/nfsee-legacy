@@ -1,6 +1,6 @@
 # NFSee
 
-**Note: Development of this repo is discontinued. It will be replaced with a new [flutter version](https://github.com/nfc.im/nfsee) that can run on both Android and iOS.**
+**Note: Development of this repo is discontinued. It will be replaced with a new [flutter version](https://github.com/nfcim/nfsee) that can run on both Android and iOS.**
 
 NFSee is an Android application that can:
 
